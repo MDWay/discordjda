@@ -1,0 +1,87 @@
+package de.romjaki.discord.jda.commands;
+
+import de.romjaki.discord.jda.Command;
+import de.romjaki.discord.jda.Commands;
+import de.romjaki.discord.jda.Constants;
+import de.romjaki.discord.jda.UnUtil;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.TextChannel;
+
+/**
+ * Created by RGR on 20.05.2017.
+ */
+public class CommandHelp implements Command {
+    @Override
+    public String getName() {
+        return "help";
+    }
+
+    @Override
+    public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
+        switch (args.length) {
+            case 0: {
+                for (Command command : Commands.getCommands()) {
+                    sendCommand(channel, command);
+                }
+                break;
+            }
+            case 1: {
+                Command c = Commands.getCommand(args[0]);
+                if (c == null) {
+                    channel.sendMessage(new EmbedBuilder()
+                            .setTitle("Error")
+                            .setColor(UnUtil.randomColor())
+                            .setDescription("The command `" + args[0] + "` was not found!")
+                            .build()).queue();
+                } else {
+                    sendCommand(channel, c);
+                }
+
+                break;
+            }
+        }
+        message.delete().queue();
+    }
+
+    public void sendCommand(TextChannel channel, Command c) {
+        channel.sendMessage(new EmbedBuilder()
+                .setTitle(Constants.cmdChar + c.getName())
+                .setColor(UnUtil.randomColor())
+                .setDescription("`" + Constants.cmdChar + c.getName() + " " + c.getSyntax() + "`   " + c.getDescription())
+                .build()).queue();
+    }
+
+    @Override
+    public boolean requiresBotChannel() {
+        return false;
+    }
+
+    @Override
+    public String getSyntax() {
+        return "[command]";
+    }
+
+    @Override
+    public String getTopicRequirement() {
+        return "allowHelp";
+    }
+
+    @Override
+    public String getDescription() {
+        return "helps";
+    }
+
+    @Override
+    public Permission[] getRequiredServerPermission() {
+        return new Permission[0];
+    }
+
+    @Override
+    public int getRequiredClientPermission() {
+        return 0;
+    }
+}

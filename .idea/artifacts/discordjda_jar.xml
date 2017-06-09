@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="discordjda:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/discordjda_jar</output-path>
+    <root id="archive" name="discordjda.jar">
+      <element id="extracted-dir" path="$PROJECT_DIR$/JDA-3.0.0_157-withDependencies.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$APPLICATION_HOME_DIR$/redist/annotations-java8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/twitch-api-wrapper-0.3-jar-with-dependencies.jar" path-in-jar="/" />
+      <element id="module-output" name="discordjda" />
+    </root>
+  </artifact>
+</component>
