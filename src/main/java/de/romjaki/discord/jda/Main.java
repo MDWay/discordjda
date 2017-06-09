@@ -36,11 +36,11 @@ public class Main {
         registerCommands();
         Locale.setDefault(Locale.ENGLISH);
         //For Lava Player
+        playerManager = new DefaultAudioPlayerManager();
+        AudioSourceManagers.registerRemoteSources(playerManager);
         player = Main.playerManager.createPlayer();
         trackScheduler = new TrackScheduler(player);
         player.addListener(trackScheduler);
-        playerManager = new DefaultAudioPlayerManager();
-        AudioSourceManagers.registerRemoteSources(playerManager);
         try {
             jda = new JDABuilder(AccountType.BOT)
                     .setToken(Constants.BotUser.TOKEN)
