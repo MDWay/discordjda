@@ -1,5 +1,6 @@
 package de.romjaki.discord.jda.commands.music;
 
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import de.romjaki.discord.jda.Command;
 import de.romjaki.discord.jda.Main;
 import de.romjaki.discord.jda.UnUtil;
@@ -21,10 +22,12 @@ public class CommandSkipMusic implements Command {
 
     @Override
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
+        AudioTrack track = Main.player.getPlayingTrack();
         Main.trackScheduler.nextTrack(true);
         channel.sendMessage(new EmbedBuilder()
                 .setColor(UnUtil.randomColor())
                 .setTitle("Skipped title")
+                .setDescription(track.getInfo().title)
                 .build()).queue();
     }
 

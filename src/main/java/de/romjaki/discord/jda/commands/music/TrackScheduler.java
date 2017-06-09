@@ -54,7 +54,11 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public void nextTrack(boolean interrupt) {
+        if(interrupt) {
+            player.stopTrack();
+        }
         player.startTrack(queue.poll(), interrupt);
+
     }
 
     @Override
