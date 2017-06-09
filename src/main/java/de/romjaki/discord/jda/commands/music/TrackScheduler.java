@@ -39,7 +39,7 @@ public class TrackScheduler extends AudioEventAdapter {
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         if (endReason.mayStartNext) {
-            nextTrack();
+            nextTrack(false);
         }
     }
 
@@ -53,8 +53,8 @@ public class TrackScheduler extends AudioEventAdapter {
         // Audio track has been unable to provide us any audio, might want to just start a new track
     }
 
-    public void nextTrack() {
-        player.startTrack(queue.poll(), false);
+    public void nextTrack(boolean interrupt) {
+        player.startTrack(queue.poll(), interrupt);
     }
 
     @Override

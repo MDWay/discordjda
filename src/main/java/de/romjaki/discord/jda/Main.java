@@ -1,10 +1,13 @@
 package de.romjaki.discord.jda;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import de.romjaki.discord.jda.commands.*;
 import de.romjaki.discord.jda.commands.music.CommandPlayMusic;
+import de.romjaki.discord.jda.commands.music.CommandSkipMusic;
+import de.romjaki.discord.jda.commands.music.TrackScheduler;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -21,6 +24,8 @@ import java.util.Locale;
 public class Main {
     public static JDA jda;
     public static AudioPlayerManager playerManager;
+    public static TrackScheduler trackScheduler;
+    public static AudioPlayer player;
 
     @Contract(" -> fail")
     private Main() {
@@ -29,10 +34,13 @@ public class Main {
 
     public static void main(String... args) {
         registerCommands();
+        Locale.setDefault(Locale.ENGLISH);
         //For Lava Player
+        player = Main.playerManager.createPlayer();
+        trackScheduler = new TrackScheduler(player);
+        player.addListener(trackScheduler);
         playerManager = new DefaultAudioPlayerManager();
         AudioSourceManagers.registerRemoteSources(playerManager);
-        Locale.setDefault(Locale.ENGLISH);
         try {
             jda = new JDABuilder(AccountType.BOT)
                     .setToken(Constants.BotUser.TOKEN)
@@ -58,5 +66,6 @@ public class Main {
         Commands.addCommand(new CommandAddChuck());
         Commands.addCommand(new CommandPermission());
         Commands.addCommand(new CommandPlayMusic());
+        Commands.addCommand(new CommandSkipMusic());
     }
 }

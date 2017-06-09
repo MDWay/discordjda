@@ -1,18 +1,18 @@
 package de.romjaki.discord.jda.commands.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import de.romjaki.discord.jda.Command;
 import de.romjaki.discord.jda.Constants;
-import de.romjaki.discord.jda.Main;
 import de.romjaki.discord.jda.UnUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.managers.AudioManager;
+
+import static de.romjaki.discord.jda.Main.*;
 
 /**
  * Created by RGR on 09.06.2017.
@@ -28,12 +28,9 @@ public class CommandPlayMusic implements Command {
         VoiceChannel vchannel = member.getVoiceState().getChannel();
         String url = args[0];
         AudioManager a = guild.getAudioManager();
-        AudioPlayer player = Main.playerManager.createPlayer();
-        TrackScheduler trackScheduler = new TrackScheduler(player);
-        player.addListener(trackScheduler);
         a.setSendingHandler(new MusicSendingHandler(player));
         a.openAudioConnection(vchannel);
-        Main.playerManager.loadItemOrdered(a, url, new AudioLoadResultHandler() {
+        playerManager.loadItemOrdered(a, url, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
                 trackScheduler.queue(track);
