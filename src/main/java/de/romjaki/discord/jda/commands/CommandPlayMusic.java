@@ -45,7 +45,7 @@ public class CommandPlayMusic implements Command {
                         .setTitle("Added Title to queue", track.getInfo().uri)
                         .addField("Name", track.getInfo().title, true)
                         .addField("Interpret", track.getInfo().author, true)
-                        .addField("Duration", track.getDuration() + "", true)
+                        .addField("Duration", durationFormat(track.getDuration()), true)
                         .build()).queue();
             }
 
@@ -76,6 +76,10 @@ public class CommandPlayMusic implements Command {
 
     }
 
+    private String durationFormat(long duration) {
+        return String.format("%02d:%02d", duration / 1000 / 60, duration / 1000 % 60);
+    }
+
     @Override
     public boolean requiresBotChannel() {
         return false;
@@ -98,7 +102,7 @@ public class CommandPlayMusic implements Command {
 
     @Override
     public int getRequiredClientPermission() {
-        return 0;
+        return 4;
     }
 
     @Override
