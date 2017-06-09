@@ -1,6 +1,7 @@
 package de.romjaki.discord.jda.commands.music;
 
 import de.romjaki.discord.jda.Command;
+import de.romjaki.discord.jda.Main;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
@@ -18,7 +19,7 @@ public class CommandSkipMusic implements Command {
 
     @Override
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
-
+        Main.trackScheduler.nextTrack(true);
     }
 
     @Override
