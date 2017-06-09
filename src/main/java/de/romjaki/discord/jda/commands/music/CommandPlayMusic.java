@@ -1,4 +1,4 @@
-package de.romjaki.discord.jda.commands;
+package de.romjaki.discord.jda.commands.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
@@ -9,8 +9,6 @@ import de.romjaki.discord.jda.Command;
 import de.romjaki.discord.jda.Constants;
 import de.romjaki.discord.jda.Main;
 import de.romjaki.discord.jda.UnUtil;
-import de.romjaki.discord.jda.commands.music.MusicSendingHandler;
-import de.romjaki.discord.jda.commands.music.TrackScheduler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
