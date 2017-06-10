@@ -5,10 +5,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import de.romjaki.discord.jda.commands.*;
-import de.romjaki.discord.jda.commands.music.CommandCancelAndLeave;
-import de.romjaki.discord.jda.commands.music.CommandPlayMusic;
-import de.romjaki.discord.jda.commands.music.CommandSkipMusic;
-import de.romjaki.discord.jda.commands.music.TrackScheduler;
+import de.romjaki.discord.jda.commands.music.*;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -69,5 +66,6 @@ public class Main {
         Commands.addCommand(new CommandPlayMusic());
         Commands.addCommand(new CommandSkipMusic());
         Commands.addCommand(new CommandCancelAndLeave());
+        Commands.addCommand(new CommandCurrentlyPlaying());
     }
 }

@@ -81,4 +81,8 @@ public class TrackScheduler extends AudioEventAdapter {
         queue.clear();
         player.stopTrack();
     }
+
+    public AudioTrack currentTrack() {
+        return player.getPlayingTrack();
+    }
 }

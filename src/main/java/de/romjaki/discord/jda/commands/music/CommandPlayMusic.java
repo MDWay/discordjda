@@ -71,7 +71,7 @@ public class CommandPlayMusic implements Command {
 
     }
 
-    private String durationFormat(long duration) {
+    public static String durationFormat(long duration) {
         return String.format("%02d:%02d", duration / 1000 / 60, duration / 1000 % 60);
     }
 
