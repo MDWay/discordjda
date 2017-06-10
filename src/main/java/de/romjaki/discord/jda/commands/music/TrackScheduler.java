@@ -39,22 +39,27 @@ public class TrackScheduler extends AudioEventAdapter {
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         if (endReason.mayStartNext) {
+            if (queue.isEmpty()) {
+                return;
+            }
             nextTrack(false);
         }
     }
 
     @Override
     public void onTrackException(AudioPlayer player, AudioTrack track, FriendlyException exception) {
-        // An already playing track threw an exception (track end event will still be received separately)
+        nextTrack(true);
     }
 
     @Override
     public void onTrackStuck(AudioPlayer player, AudioTrack track, long thresholdMs) {
-        // Audio track has been unable to provide us any audio, might want to just start a new track
+        if (thresholdMs > 10000) {
+            nextTrack(true);
+        }
     }
 
     public void nextTrack(boolean interrupt) {
-        if(interrupt) {
+        if (interrupt) {
             player.stopTrack();
         }
         player.startTrack(queue.poll(), interrupt);
@@ -70,5 +75,10 @@ public class TrackScheduler extends AudioEventAdapter {
         if (!player.startTrack(track, true)) {
             queue.offer(track);
         }
+    }
+
+    public void cancelAll() {
+        queue.clear();
+        player.stopTrack();
     }
 }
