@@ -30,7 +30,9 @@ public class CommandPermission implements Command {
         } else if (args[0].equalsIgnoreCase("set")) {
             Permissions.setPermissions(message.getMentionedUsers().get(0), Integer.parseInt(args[2]));
         } else if (args[0].equalsIgnoreCase("u_add")) {
-            Permissions.updatePermission(message.getMentionedUsers().get(0), perm->perm | Permissions.getAsFlag(args[2]));
+            Permissions.updatePermission(message.getMentionedUsers().get(0), perm -> perm | Permissions.getAsFlag(args[2]));
+        } else if (args[0].equalsIgnoreCase("u_rem")) {
+            Permissions.updatePermission(message.getMentionedUsers().get(0), perm -> perm & ~Permissions.getAsFlag(args[2]));
         }
         channel.sendMessage(new EmbedBuilder()
                 .setColor(UnUtil.randomColor())
