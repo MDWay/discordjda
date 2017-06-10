@@ -8,6 +8,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.function.UnaryOperator;
 
 /**
  * Created by RGR on 02.06.2017.
@@ -23,7 +24,14 @@ public class Permissions {
 
     public static void setPermissions(User u, int permissions) {
         permissionMap.put(u, permissions);
+        if (permissions == 0) {
+            permissionMap.remove(u);
+        }
         updatePermissions();
+    }
+
+    public static void updatePermission(User u, UnaryOperator<Integer> op) {
+        setPermissions(u, op.apply(getPermissions(u)));
     }
 
     public static void updatePermissions() {
