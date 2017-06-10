@@ -17,7 +17,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 public class CommandSkipMusic implements Command {
     @Override
     public String getName() {
-        return "skip";
+        return "mskip";
     }
 
     @Override
