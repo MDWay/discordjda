@@ -23,12 +23,14 @@ public class CommandPermission implements Command {
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
         if (args.length < 3) return;
         if (args[0].equalsIgnoreCase("rem")) {
-            Permissions.setPermissions(message.getMentionedUsers().get(0),
-                    Permissions.getPermissions(message.getMentionedUsers().get(0)) & ~((int) Math.pow(2, Integer.parseInt(args[2]) - 1)));
+            Permissions.updatePermission(message.getMentionedUsers().get(0), perm -> perm & ~((int) Math.pow(2, Integer.parseInt(args[2]) - 1)));
         } else if (args[0].equalsIgnoreCase("add")) {
+            Permissions.updatePermission(message.getMentionedUsers().get(0), perm -> perm | ((int) Math.pow(2, Integer.parseInt(args[2]) - 1)));
             Permissions.setPermissions(message.getMentionedUsers().get(0), Permissions.getPermissions(message.getMentionedUsers().get(0)) | ((int) Math.pow(2, Integer.parseInt(args[2]) - 1)));
         } else if (args[0].equalsIgnoreCase("set")) {
             Permissions.setPermissions(message.getMentionedUsers().get(0), Integer.parseInt(args[2]));
+        } else if (args[0].equalsIgnoreCase("u_add")) {
+            Permissions.updatePermission(message.getMentionedUsers().get(0), perm->perm | Permissions.getAsFlag(args[2]));
         }
         channel.sendMessage(new EmbedBuilder()
                 .setColor(UnUtil.randomColor())

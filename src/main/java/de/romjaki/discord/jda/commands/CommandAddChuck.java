@@ -2,6 +2,7 @@ package de.romjaki.discord.jda.commands;
 
 import de.romjaki.discord.jda.Command;
 import de.romjaki.discord.jda.Constants;
+import de.romjaki.discord.jda.Permissions;
 import de.romjaki.discord.jda.UnUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -16,6 +17,10 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  * Created by RGR on 23.05.2017.
  */
 public class CommandAddChuck implements Command {
+    static {
+        Permissions.addFlag("addJoke", 1);
+    }
+
     @Override
     public String getName() {
         return "chuck-add";
@@ -55,7 +60,7 @@ public class CommandAddChuck implements Command {
 
     @Override
     public int getRequiredClientPermission() {
-        return 2;
+        return Permissions.getAsFlag("addJoke");
     }
 
     @Override

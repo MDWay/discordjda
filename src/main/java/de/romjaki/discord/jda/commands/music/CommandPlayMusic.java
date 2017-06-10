@@ -6,6 +6,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import de.romjaki.discord.jda.Command;
 import de.romjaki.discord.jda.Constants;
+import de.romjaki.discord.jda.Permissions;
 import de.romjaki.discord.jda.UnUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -18,6 +19,14 @@ import static de.romjaki.discord.jda.Main.*;
  * Created by RGR on 09.06.2017.
  */
 public class CommandPlayMusic implements Command {
+    static {
+        Permissions.addFlag("playMusic", 2);
+    }
+
+    public static String durationFormat(long duration) {
+        return String.format("%02d:%02d", duration / 1000 / 60, duration / 1000 % 60);
+    }
+
     @Override
     public String getName() {
         return "music";
@@ -71,10 +80,6 @@ public class CommandPlayMusic implements Command {
 
     }
 
-    public static String durationFormat(long duration) {
-        return String.format("%02d:%02d", duration / 1000 / 60, duration / 1000 % 60);
-    }
-
     @Override
     public boolean requiresBotChannel() {
         return false;
@@ -97,7 +102,7 @@ public class CommandPlayMusic implements Command {
 
     @Override
     public int getRequiredClientPermission() {
-        return 4;
+        return Permissions.getAsFlag("playMusic");
     }
 
     @Override

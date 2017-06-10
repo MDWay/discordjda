@@ -3,6 +3,7 @@ package de.romjaki.discord.jda.commands.music;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import de.romjaki.discord.jda.Command;
 import de.romjaki.discord.jda.Main;
+import de.romjaki.discord.jda.Permissions;
 import de.romjaki.discord.jda.UnUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -15,6 +16,10 @@ import net.dv8tion.jda.core.entities.TextChannel;
  * Created by RGR on 09.06.2017.
  */
 public class CommandSkipMusic implements Command {
+    static {
+        Permissions.addFlag("skipMusic", 3);
+    }
+
     @Override
     public String getName() {
         return "mskip";
@@ -53,7 +58,7 @@ public class CommandSkipMusic implements Command {
 
     @Override
     public int getRequiredClientPermission() {
-        return 8;
+        return Permissions.getAsFlag("skipMusic");
     }
 
     @Override

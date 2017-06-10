@@ -15,11 +15,16 @@ import java.util.function.UnaryOperator;
  */
 public class Permissions {
     public static final Map<User, Integer> permissionMap = new HashMap<>();
+    private static final Map<String, Integer> flagMap = new HashMap<>();
     public static File permissionFile = new File(Constants.Config.path + "permissions.csv");
 
     @Contract(" -> fail")
     private Permissions() {
         UnUtil.singleton(Permissions.class);
+    }
+
+    public static void addFlag(String key, Integer offset) {
+        flagMap.put(key.toLowerCase(), offset);
     }
 
     public static void setPermissions(User u, int permissions) {
@@ -76,5 +81,13 @@ public class Permissions {
 
     public static int getPermissions(User user) {
         return permissionMap.getOrDefault(user, 0);
+    }
+
+    public static Integer getAsFlag(String arg) {
+        return 1 << getFlagOffset(arg);
+    }
+
+    private static Integer getFlagOffset(String arg) {
+        return flagMap.get(arg.toLowerCase());
     }
 }
