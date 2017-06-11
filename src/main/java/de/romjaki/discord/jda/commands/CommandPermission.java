@@ -10,6 +10,8 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 /**
  * Created by RGR on 09.06.2017.
  */
@@ -38,7 +40,7 @@ public class CommandPermission implements Command {
                 .setColor(UnUtil.randomColor())
                 .setTitle("Updated Permissions")
                 .setDescription(message.getMentionedUsers().get(0).getAsMention() + " has now the permissions `0b" + Integer.toBinaryString(Permissions.getPermissions(message.getMentionedUsers().get(0))) + "`")
-                .build()).queue();
+                .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
     }
 
     @Override

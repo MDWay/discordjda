@@ -12,6 +12,10 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
+import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 /**
  * Created by RGR on 09.06.2017.
  */
@@ -33,7 +37,7 @@ public class CommandSkipMusic implements Command {
                 .setColor(UnUtil.randomColor())
                 .setTitle("Skipped title")
                 .setDescription(track.getInfo().title)
-                .build()).queue();
+                .build()).queue(msg->msg.delete().queueAfter(5, SECONDS));
     }
 
     @Override
