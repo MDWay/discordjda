@@ -5,6 +5,8 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import de.romjaki.discord.jda.commands.*;
+import de.romjaki.discord.jda.commands.category.CategoryDefault;
+import de.romjaki.discord.jda.commands.category.CategoryMusic;
 import de.romjaki.discord.jda.commands.music.*;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -31,6 +33,7 @@ public class Main {
     }
 
     public static void main(String... args) {
+        registerCategories();
         registerCommands();
         Locale.setDefault(Locale.ENGLISH);
         //For Lava Player
@@ -53,6 +56,11 @@ public class Main {
             System.exit(1);
         }
         Permissions.readPermissions(jda);
+    }
+
+    private static void registerCategories() {
+        Commands.addCategory(new CategoryDefault());
+        Commands.addCategory(new CategoryMusic());
     }
 
     private static void registerCommands() {

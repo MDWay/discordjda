@@ -1,8 +1,10 @@
 package de.romjaki.discord.jda.commands.music;
 
 import de.romjaki.discord.jda.Command;
+import de.romjaki.discord.jda.Commands;
 import de.romjaki.discord.jda.Main;
 import de.romjaki.discord.jda.UnUtil;
+import de.romjaki.discord.jda.commands.Category;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
@@ -52,6 +54,11 @@ public class CommandCancelAndLeave implements Command {
     @Override
     public int getRequiredClientPermission() {
         return 8;
+    }
+
+    @Override
+    public Category getCategory() {
+        return Commands.getCategory("music");
     }
 
     @Override

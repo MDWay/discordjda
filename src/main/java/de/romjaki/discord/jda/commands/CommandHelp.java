@@ -24,27 +24,49 @@ public class CommandHelp implements Command {
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
         switch (args.length) {
             case 0: {
-                for (Command command : Commands.getCommands()) {
-                    sendCommand(channel, command);
+                EmbedBuilder eB = new EmbedBuilder();
+                for (Category category : Commands.getCategories()) {
+                    eB.addField(category.getName(), "More info with: `" + Constants.cmdChar + getName() + " /" + category.getName() + "`", true);
                 }
+                channel.sendMessage(eB
+                        .build()).queue();
                 break;
             }
             case 1: {
-                Command c = Commands.getCommand(args[0]);
-                if (c == null) {
-                    channel.sendMessage(new EmbedBuilder()
-                            .setTitle("Error")
-                            .setColor(UnUtil.randomColor())
-                            .setDescription("The command `" + args[0] + "` was not found!")
-                            .build()).queue();
+                if (args[0].startsWith("/")) {
+                    Category c = Commands.getCategory(args[0].replaceFirst("/", ""));
+                    if (c == null) {
+                        channel.sendMessage(new EmbedBuilder()
+                                .setTitle("Error")
+                                .setColor(UnUtil.randomColor())
+                                .setDescription("The category `" + args[0] + "` was not found!")
+                                .build()).queue();
+                    } else {
+                        sendCategory(channel, c);
+                    }
                 } else {
-                    sendCommand(channel, c);
+                    Command c = Commands.getCommand(args[0]);
+                    if (c == null) {
+                        channel.sendMessage(new EmbedBuilder()
+                                .setTitle("Error")
+                                .setColor(UnUtil.randomColor())
+                                .setDescription("The command `" + args[0] + "` was not found!")
+                                .build()).queue();
+                    } else {
+                        sendCommand(channel, c);
+                    }
                 }
 
                 break;
             }
         }
         message.delete().queue();
+    }
+
+    private void sendCategory(TextChannel channel, Category c) {
+        EmbedBuilder eB = new EmbedBuilder();
+        c.getCommands().forEach(com -> eB.addField("`" + Constants.cmdChar + com.getInvokation() + " " + com.getSyntax() + "`", com.getDescription(), true));
+        channel.sendMessage(eB.build()).queue();
     }
 
     public void sendCommand(TextChannel channel, Command c) {
@@ -62,7 +84,7 @@ public class CommandHelp implements Command {
 
     @Override
     public String getSyntax() {
-        return "[command]";
+        return "[command | /category]";
     }
 
     @Override

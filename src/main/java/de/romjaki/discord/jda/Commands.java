@@ -1,5 +1,6 @@
 package de.romjaki.discord.jda;
 
+import de.romjaki.discord.jda.commands.Category;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -11,6 +12,7 @@ import java.util.*;
  */
 public class Commands {
     private static Set<Command> commands = new HashSet<>();
+    private static Set<Category> categories = new HashSet<>();
 
     @Contract(" -> fail")
     private Commands() {
@@ -18,8 +20,8 @@ public class Commands {
     }
 
     @NotNull
-    public static Set<Command> getCommands() {
-        return Collections.unmodifiableSet(commands);
+    public static Collection<Command> getCommands() {
+        return Collections.unmodifiableCollection(commands);
     }
 
     public static boolean addCommand(Command command) {
@@ -29,13 +31,20 @@ public class Commands {
     @Nullable
     public static Command getCommand(String name) {
         Objects.requireNonNull(name);
-        for (Command c : getCommands()) {
-            if (c.getName().equalsIgnoreCase(name)) {
-                return c;
-            }
-        }
-        return null;
+        return getCommands().stream().filter(com -> com.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
 
+    public static Collection<Category> getCategories() {
+        return Collections.unmodifiableCollection(categories);
+    }
+
+    public static Category getCategory(String string) {
+        Objects.requireNonNull(string);
+        return getCategories().stream().filter(cat -> cat.getName().equalsIgnoreCase(string)).findFirst().orElse(null);
+    }
+
+    public static void addCategory(Category category) {
+        categories.add(category);
+    }
 }
