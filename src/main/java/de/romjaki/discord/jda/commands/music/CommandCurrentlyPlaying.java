@@ -24,7 +24,7 @@ public class CommandCurrentlyPlaying implements Command {
 
     @Override
     public Category getCategory() {
-        return Commands.getCategory("playMusic");
+        return Commands.getCategory("music");
     }
 
     @Override
