@@ -26,7 +26,7 @@ public class CommandHelp implements Command {
             case 0: {
                 EmbedBuilder eB = new EmbedBuilder();
                 for (Category category : Commands.getCategories()) {
-                    eB.addField(category.getName(), "More info with: `" + Constants.cmdChar + getName() + " /" + category.getName() + "`", true);
+                    eB.addField(category.getName(), "More info with: `" + Constants.cmdChar + getName() + " /" + category.getName() + "`", false);
                 }
                 channel.sendMessage(eB
                         .build()).queue();
@@ -65,7 +65,7 @@ public class CommandHelp implements Command {
 
     private void sendCategory(TextChannel channel, Category c) {
         EmbedBuilder eB = new EmbedBuilder();
-        c.getCommands().forEach(com -> eB.addField("`" + Constants.cmdChar + com.getInvokation() + " " + com.getSyntax() + "`", com.getDescription(), true));
+        c.getCommands().forEach(com -> eB.addField("`" + Constants.cmdChar + com.getInvokation() + " " + com.getSyntax() + "`", com.getDescription(), false));
         channel.sendMessage(eB.build()).queue();
     }
 
