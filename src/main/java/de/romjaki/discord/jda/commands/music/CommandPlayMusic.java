@@ -14,6 +14,7 @@ import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.managers.AudioManager;
 
 import static de.romjaki.discord.jda.Main.*;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * Created by RGR on 09.06.2017.
@@ -50,7 +51,7 @@ public class CommandPlayMusic implements Command {
                         .addField("Name", track.getInfo().title, true)
                         .addField("Interpret", track.getInfo().author, true)
                         .addField("Duration", durationFormat(track.getDuration()), true)
-                        .build()).queue();
+                        .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
             }
 
             @Override
