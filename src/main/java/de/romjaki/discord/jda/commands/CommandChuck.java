@@ -2,7 +2,6 @@ package de.romjaki.discord.jda.commands;
 
 import de.romjaki.discord.jda.Command;
 import de.romjaki.discord.jda.Constants;
-import de.romjaki.discord.jda.Permissions;
 import de.romjaki.discord.jda.UnUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;

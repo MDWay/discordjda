@@ -28,7 +28,7 @@ public class CommandPlayMusic implements Command {
 
     @Override
     public String getName() {
-        return "music";
+        return "play";
     }
 
     @Override

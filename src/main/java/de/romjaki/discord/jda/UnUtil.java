@@ -42,6 +42,6 @@ public class UnUtil {
         float r = Constants.random.nextFloat();
         float g = Constants.random.nextFloat();
         float b = Constants.random.nextFloat();
-        return new Color(r,g,b);
+        return new Color(r, g, b);
     }
 }

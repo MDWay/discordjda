@@ -19,12 +19,12 @@ import net.dv8tion.jda.core.entities.TextChannel;
 public class CommandCurrentlyPlaying implements Command {
     @Override
     public String getName() {
-        return "mplaying";
+        return "playing";
     }
 
     @Override
     public Category getCategory() {
-        return Commands.getCategory("music");
+        return Commands.getCategory("playMusic");
     }
 
     @Override

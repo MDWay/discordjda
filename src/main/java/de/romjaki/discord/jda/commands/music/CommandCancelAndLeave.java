@@ -18,7 +18,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 public class CommandCancelAndLeave implements Command {
     @Override
     public String getName() {
-        return "mleave";
+        return "leave";
     }
 
     @Override

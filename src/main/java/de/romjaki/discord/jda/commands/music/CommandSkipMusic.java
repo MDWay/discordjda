@@ -22,7 +22,7 @@ public class CommandSkipMusic implements Command {
 
     @Override
     public String getName() {
-        return "mskip";
+        return "skip";
     }
 
     @Override
