@@ -1,7 +1,6 @@
 package de.romjaki.discord.jda;
 
 import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.impl.GameImpl;
 import net.dv8tion.jda.core.utils.SimpleLog;
 import org.jetbrains.annotations.Contract;
 
@@ -16,7 +15,7 @@ import java.util.Scanner;
  */
 public class Constants {
     public static String cmdChar = "##";
-    public static Game gameMessage = new GameImpl("everything you want", "https://discord.gg/gTXUqSH", Game.GameType.DEFAULT);
+    public static Game gameMessage = Game.of(Constants.cmdChar + "help");
     public static List<String> allowAllCMDs = new ArrayList<>();
     public static Random random = new Random();
 
