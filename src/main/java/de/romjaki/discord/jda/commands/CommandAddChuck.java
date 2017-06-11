@@ -28,7 +28,6 @@ public class CommandAddChuck implements Command {
 
     @Override
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
-        message.delete().queue();
         Constants.Chuck.add(String.join(" ", args));
         channel.sendMessage(new EmbedBuilder()
                 .setColor(UnUtil.randomColor())
