@@ -65,7 +65,7 @@ public class CommandPlayMusic implements Command {
                         .addField("Title", playlist.getName(), true)
                         .setColor(UnUtil.randomColor())
                         .addField("Duration", playlist.getTracks().stream().map(AudioTrack::getDuration).reduce(Math::addExact) + "", true)
-                        .build()).queue();
+                        .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
             }
 
             @Override
