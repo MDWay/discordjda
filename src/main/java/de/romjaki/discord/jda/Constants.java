@@ -15,7 +15,7 @@ import java.util.Scanner;
  * Created by RGR on 19.05.2017.
  */
 public class Constants {
-    public static String cmdChar = "$r";
+    public static String cmdChar = "##";
     public static Game gameMessage = new GameImpl("everything you want", "https://discord.gg/gTXUqSH", Game.GameType.DEFAULT);
     public static List<String> allowAllCMDs = new ArrayList<>();
     public static Random random = new Random();
