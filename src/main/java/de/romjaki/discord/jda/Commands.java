@@ -47,4 +47,9 @@ public class Commands {
     public static void addCategory(Category category) {
         categories.add(category);
     }
+
+    public static Command getCommandByInvocation(String command) {
+        Objects.requireNonNull(command);
+        return getCommands().stream().filter(c->c.getInvokation().equalsIgnoreCase(command)).findFirst().orElse(null);
+    }
 }

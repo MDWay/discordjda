@@ -34,6 +34,14 @@ public class CommandPlayMusic implements Command {
     @Override
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
         VoiceChannel vchannel = member.getVoiceState().getChannel();
+        if (vchannel == null) {
+            channel.sendMessage(new EmbedBuilder()
+                    .setColor(UnUtil.randomColor())
+                    .setTitle("Error")
+                    .setDescription("You have to join a Voice channel.")
+                    .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
+            return;
+        }
         String url = args[0];
         AudioManager a = guild.getAudioManager();
         a.setSendingHandler(new MusicSendingHandler(player));

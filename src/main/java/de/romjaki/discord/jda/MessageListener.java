@@ -42,7 +42,7 @@ public class MessageListener extends ListenerAdapter {
             return;
         }
         Constants.Loggers.commands.info(member + " issued the command `" + Constants.cmdChar + UnUtil.escape(command) + " " + UnUtil.escape(String.join(" ", args)) + "`");
-        Command c = Commands.getCommand(command);
+        Command c = Commands.getCommandByInvocation(command);
         if ((c == null)) {
             channel.sendMessage("Command `" + Constants.cmdChar + UnUtil.escape(command) + "` was not found. Try `" + Constants.cmdChar + "help`").queue();
             Constants.Loggers.commands.info(member + " tried to execute the (unknown) command `" + Constants.cmdChar + UnUtil.escape(command) + "`.");
