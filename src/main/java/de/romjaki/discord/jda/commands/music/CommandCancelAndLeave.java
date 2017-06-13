@@ -12,6 +12,8 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 /**
  * Created by RGR on 10.06.2017.
  */
@@ -28,7 +30,7 @@ public class CommandCancelAndLeave implements Command {
         channel.sendMessage(new EmbedBuilder()
                 .setColor(UnUtil.randomColor())
                 .setTitle("Cleared the music queue... Now leaving Music Channel")
-                .build()).queue();
+                .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
     }
 
     @Override
