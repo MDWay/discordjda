@@ -1,8 +1,10 @@
-package de.romjaki.discord.jda.commands;
+package de.romjaki.discord.jda.commands.admin;
 
 import de.romjaki.discord.jda.Command;
+import de.romjaki.discord.jda.Commands;
 import de.romjaki.discord.jda.Permissions;
 import de.romjaki.discord.jda.UnUtil;
+import de.romjaki.discord.jda.commands.Category;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
@@ -61,6 +63,11 @@ public class CommandPermission implements Command {
     @Override
     public String getTopicRequirement() {
         return "";
+    }
+
+    @Override
+    public Category getCategory() {
+        return Commands.getCategory("admin");
     }
 
     @Override

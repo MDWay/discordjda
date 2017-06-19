@@ -42,13 +42,15 @@ public class MessageListener extends ListenerAdapter {
             return;
         }
         Constants.Loggers.commands.info(member + " issued the command `" + Constants.cmdChar + UnUtil.escape(command) + " " + UnUtil.escape(String.join(" ", args)) + "`");
+
         Command c = Commands.getCommandByInvocation(command);
         if ((c == null)) {
             channel.sendMessage("Command `" + Constants.cmdChar + UnUtil.escape(command) + "` was not found. Try `" + Constants.cmdChar + "help`").queue();
             Constants.Loggers.commands.info(member + " tried to execute the (unknown) command `" + Constants.cmdChar + UnUtil.escape(command) + "`.");
             return;
         }
-        if (!member.hasPermission(channel, c.getRequiredServerPermission()) || ((c.getRequiredClientPermission() & Permissions.getPermissions(member.getUser())) != c.getRequiredClientPermission())) {
+        if (!member.hasPermission(channel, c.getRequiredServerPermission()) || (((1 | c.getRequiredClientPermission()) &
+                Permissions.getPermissions(member.getUser())) != (1 | c.getRequiredClientPermission()))) {
             channel.sendMessage("The command `" + Constants.cmdChar + UnUtil.escape(command) + "` requires more than Permissions than you have.").queue();
             Constants.Loggers.commands.warn(member + " tried to execute the command `" + Constants.cmdChar + UnUtil.escape(command) + "` with too few permissions.");
             return;

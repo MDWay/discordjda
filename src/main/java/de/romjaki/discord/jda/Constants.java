@@ -1,14 +1,12 @@
 package de.romjaki.discord.jda;
 
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.utils.SimpleLog;
 import org.jetbrains.annotations.Contract;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by RGR on 19.05.2017.
@@ -18,15 +16,26 @@ public class Constants {
     public static Game gameMessage = Game.of(Constants.cmdChar + "help");
     public static List<String> allowAllCMDs = new ArrayList<>();
     public static Random random = new Random();
+    public static Map<String, String> progBars = new HashMap<>();
 
     static {
         allowAllCMDs.add("316125040917872660");//Leshs Kuhler server
     }
 
+    static {
+        String[] ids = {"<:progbar_mid_full:324910937863618560>", "<:progbar_mid_empty:324910938400751617>", "<:progbar_mid_swap:324910937771343873>", "<:progbar_start_full:324910938715193355>", "<:progbar_end_full:324910937741983744>", "<:progbar_start_empty:324910938224459778>", "<:progbar_end_empty:324910937368952832>"};
+        String[] names = {"midfull", "midempty", "midswap", "startfull", "endfull", "startempty", "endempty"};
+        for (int i = 0; i < names.length; i++) {
+            progBars.put(names[i], ids[i]);
+        }
+    }
 
     @Contract(" -> fail")
     private Constants() {
         UnUtil.singleton(Constants.class);
+    }
+
+    public static void initEmotes(JDA jda) {
     }
 
     public static class BotUser {

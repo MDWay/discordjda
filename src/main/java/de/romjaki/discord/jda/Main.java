@@ -5,6 +5,9 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import de.romjaki.discord.jda.commands.*;
+import de.romjaki.discord.jda.commands.admin.CommandEval;
+import de.romjaki.discord.jda.commands.admin.CommandPermission;
+import de.romjaki.discord.jda.commands.category.CategoryAdmin;
 import de.romjaki.discord.jda.commands.category.CategoryDefault;
 import de.romjaki.discord.jda.commands.category.CategoryMusic;
 import de.romjaki.discord.jda.commands.music.*;
@@ -51,16 +54,19 @@ public class Main {
                     .addEventListener(new StartupListener())
                     .addEventListener(new MessageListener())
                     .buildBlocking();
+
         } catch (LoginException | InterruptedException | RateLimitedException e) {
             Constants.Loggers.startup.fatal("Error occurred during log in: " + e);
             System.exit(1);
         }
         Permissions.readPermissions(jda);
+        Constants.initEmotes(jda);
     }
 
     private static void registerCategories() {
         Commands.addCategory(new CategoryDefault());
         Commands.addCategory(new CategoryMusic());
+        Commands.addCategory(new CategoryAdmin());
     }
 
     private static void registerCommands() {
@@ -74,6 +80,8 @@ public class Main {
         Commands.addCommand(new CommandPlayMusic());
         Commands.addCommand(new CommandSkipMusic());
         Commands.addCommand(new CommandCancelAndLeave());
+        Commands.addCommand(new CommandEval());
+        Commands.addCommand(new CommandProgBar());
         Commands.addCommand(new CommandCurrentlyPlaying());
     }
 }

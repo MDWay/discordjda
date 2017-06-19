@@ -80,7 +80,7 @@ public class Permissions {
     }
 
     public static int getPermissions(User user) {
-        return permissionMap.getOrDefault(user, 0);
+        return permissionMap.getOrDefault(user, 1);
     }
 
     public static Integer getAsFlag(String arg) {

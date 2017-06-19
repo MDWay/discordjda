@@ -42,10 +42,17 @@ public class CommandPlayMusic implements Command {
                     .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
             return;
         }
-        String url = args[0];
+        String url = String.join(" ", args);
         AudioManager a = guild.getAudioManager();
         a.setSendingHandler(new MusicSendingHandler(player));
         a.openAudioConnection(vchannel);
+        boolean firstOnly = false;
+        if (!isUrl(url)) {
+            url = "ytsearch: " + url;
+            firstOnly = true;
+        }
+        boolean fFirstOnly = firstOnly;
+        String fUrl = url;
         playerManager.loadItemOrdered(a, url, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
@@ -62,6 +69,10 @@ public class CommandPlayMusic implements Command {
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
+                if (fFirstOnly) {
+                    trackLoaded(playlist.getTracks().get(0));
+                    return;
+                }
                 for (AudioTrack track : playlist.getTracks()) {
                     trackScheduler.queue(track);
                     Constants.Loggers.commands.info("Added the track " + track);
@@ -76,7 +87,7 @@ public class CommandPlayMusic implements Command {
 
             @Override
             public void noMatches() {
-                Constants.Loggers.commands.fatal("Failed to fetch the music: " + url);
+                Constants.Loggers.commands.fatal("Failed to fetch the music: " + fUrl);
             }
 
             @Override
@@ -85,6 +96,10 @@ public class CommandPlayMusic implements Command {
             }
         });
 
+    }
+
+    private boolean isUrl(String url) {
+        return url.matches("(?i)^http[s]://\\w+\\.+\\w+.*");
     }
 
     @Override

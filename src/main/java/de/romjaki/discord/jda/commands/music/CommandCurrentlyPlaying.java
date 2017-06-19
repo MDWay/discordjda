@@ -30,6 +30,14 @@ public class CommandCurrentlyPlaying implements Command {
     @Override
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
         AudioTrack track = Main.trackScheduler.currentTrack();
+        if (track == null) {
+            channel.sendMessage(new EmbedBuilder()
+                    .setColor(UnUtil.randomColor())
+                    .setTitle("Currently Playing:")
+                    .setDescription("Currently the queue is empty")
+                    .build()).queue();
+            return;
+        }
         channel.sendMessage(new EmbedBuilder()
                 .setColor(UnUtil.randomColor())
                 .setTitle("Currently Playing:")
