@@ -17,11 +17,15 @@ import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.OnlineStatus;
+import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import org.jetbrains.annotations.Contract;
 
 import javax.security.auth.login.LoginException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 /**
  * Created by RGR on 19.05.2017.
@@ -32,15 +36,16 @@ public class Main {
     public static TrackScheduler trackScheduler;
     public static AudioPlayer player;
 
+
     @Contract(" -> fail")
     private Main() {
         UnUtil.singleton(Main.class);
     }
 
     public static void main(String... args) {
+        Locale.setDefault(Locale.ENGLISH);
         registerCategories();
         registerCommands();
-        Locale.setDefault(Locale.ENGLISH);
         //For Lava Player
         playerManager = new DefaultAudioPlayerManager();
         AudioSourceManagers.registerRemoteSources(playerManager);
@@ -56,14 +61,20 @@ public class Main {
                     .addEventListener(new StartupListener())
                     .addEventListener(new MessageListener())
                     .buildBlocking();
-
         } catch (LoginException | InterruptedException | RateLimitedException e) {
             Constants.Loggers.startup.fatal("Error occurred during log in: " + e);
             System.exit(1);
         }
+        findLogChannel().ifPresent(SimpleLog2Discord::addLogChannel);
         Permissions.readPermissions(jda);
         Constants.initEmotes(jda);
         Commands.registerHandles(jda);
+    }
+
+    private static Optional<TextChannel> findLogChannel() {
+        List<TextChannel> channels = new ArrayList<>();
+        jda.getGuilds().forEach(guild -> channels.addAll(guild.getTextChannels()));
+        return channels.stream().filter(channel -> channel.getName().contains("log") && channel.getName().contains("rom")).findAny();
     }
 
     private static void registerCategories() {

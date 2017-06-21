@@ -6,6 +6,7 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import net.dv8tion.jda.core.utils.SimpleLog;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -14,7 +15,7 @@ import java.util.Queue;
  * Created by RGR on 09.06.2017.
  */
 public class TrackScheduler extends AudioEventAdapter {
-    Queue<AudioTrack> queue = new ArrayDeque<>();
+    private Queue<AudioTrack> queue = new ArrayDeque<>();
     private AudioPlayer player;
 
     public TrackScheduler(AudioPlayer player) {
@@ -49,6 +50,7 @@ public class TrackScheduler extends AudioEventAdapter {
     @Override
     public void onTrackException(AudioPlayer player, AudioTrack track, FriendlyException exception) {
         nextTrack(true);
+        SimpleLog.getLog("music").fatal(exception);
     }
 
     @Override
@@ -59,12 +61,8 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public void nextTrack(boolean interrupt) {
-        if (interrupt) {
-            player.stopTrack();
-        } else if (currentTrack() != null) {
-            return;
-        }
-        player.startTrack(queue.poll(), interrupt);
+        if (queue.isEmpty()) return;
+        player.startTrack(queue.poll(), !interrupt);//startTrack accepts a noInterrupt argument instead of an interrupt argument
 
     }
 

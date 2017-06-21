@@ -12,6 +12,7 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
+import static de.romjaki.discord.jda.Main.jda;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
@@ -28,8 +29,9 @@ public class CommandCancelAndLeave implements Command {
         Main.trackScheduler.cancelAll();
         guild.getAudioManager().closeAudioConnection();
         channel.sendMessage(new EmbedBuilder()
-                .setColor(UnUtil.randomColor())
                 .setTitle("Cleared the music queue... Now leaving Music Channel")
+                .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
+                .setColor(UnUtil.randomColor())
                 .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
     }
 

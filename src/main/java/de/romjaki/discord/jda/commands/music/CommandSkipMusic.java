@@ -10,6 +10,7 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
+import static de.romjaki.discord.jda.Main.jda;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
@@ -32,6 +33,7 @@ public class CommandSkipMusic implements Command {
         channel.sendMessage(new EmbedBuilder()
                 .setColor(UnUtil.randomColor())
                 .setTitle("Skipped title")
+                .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
                 .setDescription(track.getInfo().title)
                 .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
     }

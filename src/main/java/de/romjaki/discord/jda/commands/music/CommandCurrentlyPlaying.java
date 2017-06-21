@@ -13,6 +13,8 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
+import static de.romjaki.discord.jda.Main.jda;
+
 /**
  * Created by RGR on 10.06.2017.
  */
@@ -35,12 +37,14 @@ public class CommandCurrentlyPlaying implements Command {
                     .setColor(UnUtil.randomColor())
                     .setTitle("Currently Playing:")
                     .setDescription("Currently the queue is empty")
+                    .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
                     .build()).queue();
             return;
         }
         channel.sendMessage(new EmbedBuilder()
                 .setColor(UnUtil.randomColor())
                 .setTitle("Currently Playing:")
+                .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
                 .addField("Name", track.getInfo().title, true)
                 .addField("Interpret", track.getInfo().author, true)
                 .addField("Duration", CommandPlayMusic.durationFormat(track.getDuration()), true)

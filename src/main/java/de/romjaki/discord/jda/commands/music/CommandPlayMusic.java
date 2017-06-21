@@ -37,6 +37,7 @@ public class CommandPlayMusic implements Command {
         if (vchannel == null) {
             channel.sendMessage(new EmbedBuilder()
                     .setColor(UnUtil.randomColor())
+                    .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
                     .setTitle("Error")
                     .setDescription("You have to join a Voice channel.")
                     .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
@@ -61,6 +62,7 @@ public class CommandPlayMusic implements Command {
                 channel.sendMessage(new EmbedBuilder()
                         .setColor(UnUtil.randomColor())
                         .setTitle("Added Title to queue", track.getInfo().uri)
+                        .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
                         .addField("Name", track.getInfo().title, true)
                         .addField("Interpret", track.getInfo().author, true)
                         .addField("Duration", durationFormat(track.getDuration()), true)
@@ -79,6 +81,7 @@ public class CommandPlayMusic implements Command {
                 }
                 channel.sendMessage(new EmbedBuilder()
                         .setTitle("Added Playlist to queue")
+                        .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
                         .addField("Title", playlist.getName(), true)
                         .setColor(UnUtil.randomColor())
                         .addField("Duration", playlist.getTracks().stream().map(AudioTrack::getDuration).reduce(Math::addExact) + "", true)
