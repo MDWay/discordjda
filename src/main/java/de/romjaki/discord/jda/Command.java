@@ -1,6 +1,7 @@
 package de.romjaki.discord.jda;
 
 import de.romjaki.discord.jda.commands.Category;
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
@@ -34,5 +35,9 @@ public interface Command {
 
     default String getInvokation() {
         return getCategory().getPrefix() + getName();
+    }
+
+    default Command register(JDA jda) {
+        return this;
     }
 }

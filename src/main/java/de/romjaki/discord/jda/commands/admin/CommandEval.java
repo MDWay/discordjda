@@ -70,6 +70,10 @@ public class CommandEval implements Command {
                         "function complex(re, im){\n" +
                         "  return new Complex(re,im);\n" +
                         "};\n" +
+                        "\n" +
+                        "function thread() {\n" +
+                        "  return Thread.currentThread();\n" +
+                        "}\n" +
                         input +
                         "\n}\n" +
                         "}") + "";

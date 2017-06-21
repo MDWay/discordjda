@@ -1,6 +1,7 @@
 package de.romjaki.discord.jda;
 
 import de.romjaki.discord.jda.commands.Category;
+import net.dv8tion.jda.core.JDA;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -28,6 +29,7 @@ public class Commands {
         return commands.add(command);
     }
 
+    @Contract(pure = true, value = "null -> fail")
     @Nullable
     public static Command getCommand(String name) {
         Objects.requireNonNull(name);
@@ -35,6 +37,7 @@ public class Commands {
     }
 
 
+    @NotNull
     public static Collection<Category> getCategories() {
         return Collections.unmodifiableCollection(categories);
     }
@@ -50,6 +53,10 @@ public class Commands {
 
     public static Command getCommandByInvocation(String command) {
         Objects.requireNonNull(command);
-        return getCommands().stream().filter(c->c.getInvokation().equalsIgnoreCase(command)).findFirst().orElse(null);
+        return getCommands().stream().filter(c -> c.getInvokation().equalsIgnoreCase(command)).findFirst().orElse(null);
+    }
+
+    public static void registerHandles(JDA jda) {
+        getCommands().forEach(cmd -> cmd.register(jda));
     }
 }

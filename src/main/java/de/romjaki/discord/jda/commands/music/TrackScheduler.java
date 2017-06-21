@@ -61,6 +61,8 @@ public class TrackScheduler extends AudioEventAdapter {
     public void nextTrack(boolean interrupt) {
         if (interrupt) {
             player.stopTrack();
+        } else if (currentTrack() != null) {
+            return;
         }
         player.startTrack(queue.poll(), interrupt);
 
@@ -72,9 +74,8 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public void queue(AudioTrack track) {
-        if (!player.startTrack(track, true)) {
-            queue.offer(track);
-        }
+        queue.add(track);
+        nextTrack(false);
     }
 
     public void cancelAll() {

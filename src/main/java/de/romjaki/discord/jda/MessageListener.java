@@ -36,6 +36,7 @@ public class MessageListener extends ListenerAdapter {
     }
 
     public void processCommand(String command, String[] args, Guild guild, TextChannel channel, Member member, Message message) {
+        channel.sendTyping().queue();
         if (member.equals(message.getJDA().getSelfUser())) {
             channel.sendMessage("You should not use the bot to execute code/commands.").queue();
             Constants.Loggers.commands.warn("Someone tried to force the bot to execute code. Message: `" + UnUtil.escape(command) + " " + UnUtil.escape(String.join(" ", args)) + "`");
@@ -65,7 +66,11 @@ public class MessageListener extends ListenerAdapter {
             Constants.Loggers.commands.info(member + " tried to execute the command `" + Constants.cmdChar + UnUtil.escape(command) + "` without the Channel topic (`" + channel.getTopic() + "`) containing the string `" + c.getTopicRequirement() + "`.");
             return;
         }
-        c.execute(args, guild, channel, member, message);
-        message.delete().queue();
+        Thread t = new Thread(() -> {
+            c.execute(args, guild, channel, member, message);
+            message.delete().queue();
+        });
+        t.setName("Command Executor Thread: CommandLine: \"" + message.getRawContent() + "\"");
+        t.start();
     }
 }

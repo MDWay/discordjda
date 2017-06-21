@@ -9,7 +9,9 @@ import de.romjaki.discord.jda.commands.admin.CommandEval;
 import de.romjaki.discord.jda.commands.admin.CommandPermission;
 import de.romjaki.discord.jda.commands.category.CategoryAdmin;
 import de.romjaki.discord.jda.commands.category.CategoryDefault;
+import de.romjaki.discord.jda.commands.category.CategoryImages;
 import de.romjaki.discord.jda.commands.category.CategoryMusic;
+import de.romjaki.discord.jda.commands.images.CommandAvasDemon;
 import de.romjaki.discord.jda.commands.music.*;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -61,15 +63,18 @@ public class Main {
         }
         Permissions.readPermissions(jda);
         Constants.initEmotes(jda);
+        Commands.registerHandles(jda);
     }
 
     private static void registerCategories() {
+        Commands.addCategory(new CategoryImages());
         Commands.addCategory(new CategoryDefault());
         Commands.addCategory(new CategoryMusic());
         Commands.addCategory(new CategoryAdmin());
     }
 
     private static void registerCommands() {
+        Commands.addCommand(new CommandAvasDemon());
         Commands.addCommand(new CommandCat());
         Commands.addCommand(new CommandHelp());
         Commands.addCommand(new CommandCountdown());
@@ -82,6 +87,7 @@ public class Main {
         Commands.addCommand(new CommandCancelAndLeave());
         Commands.addCommand(new CommandEval());
         Commands.addCommand(new CommandProgBar());
+        Commands.addCommand(new CommandCredits());
         Commands.addCommand(new CommandCurrentlyPlaying());
     }
 }
