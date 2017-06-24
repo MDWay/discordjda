@@ -83,7 +83,7 @@ public class CommandEval implements Command {
         }
         EmbedBuilder eB = new EmbedBuilder()
                 .setTitle("Eval'd")
-                .setColor(UnUtil.randomColor())
+                .setColor(UnUtil.RandomUtils.randomColor())
                 .addField(":inbox_tray:Input", "```java\n" + input + "\n```", false);
         if (initError != null) {
             eB.addField(":x:Error! (During Init)", "```java\n" + initError + "\n```", false);

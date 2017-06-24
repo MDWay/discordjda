@@ -29,7 +29,7 @@ public class CommandHelp implements Command {
                     eB.addField(category.getName(), "More info with: `" + Constants.cmdChar + getName() + " /" + category.getName() + "`", false);
                 }
                 channel.sendMessage(eB
-                        .setColor(UnUtil.randomColor())
+                        .setColor(UnUtil.RandomUtils.randomColor())
                         .setTitle("Commands")
                         .build()).queue();
                 break;
@@ -40,7 +40,7 @@ public class CommandHelp implements Command {
                     if (c == null) {
                         channel.sendMessage(new EmbedBuilder()
                                 .setTitle("Error")
-                                .setColor(UnUtil.randomColor())
+                                .setColor(UnUtil.RandomUtils.randomColor())
                                 .setDescription("The category `" + args[0] + "` was not found!")
                                 .build()).queue();
                     } else {
@@ -51,7 +51,7 @@ public class CommandHelp implements Command {
                     if (c == null) {
                         channel.sendMessage(new EmbedBuilder()
                                 .setTitle("Error")
-                                .setColor(UnUtil.randomColor())
+                                .setColor(UnUtil.RandomUtils.randomColor())
                                 .setDescription("The command `" + args[0] + "` was not found!")
                                 .build()).queue();
                     } else {
@@ -69,7 +69,7 @@ public class CommandHelp implements Command {
         EmbedBuilder eB = new EmbedBuilder();
         c.getCommands().forEach(com -> eB.addField("`" + Constants.cmdChar + com.getInvokation() + " " + com.getSyntax() + "`", com.getDescription(), false));
         channel.sendMessage(eB
-                .setColor(UnUtil.randomColor())
+                .setColor(UnUtil.RandomUtils.randomColor())
                 .setTitle("Commands of category " + c.getName())
                 .setDescription(c.getDescription())
                 .build()).queue();
@@ -78,7 +78,7 @@ public class CommandHelp implements Command {
     public void sendCommand(TextChannel channel, Command c) {
         channel.sendMessage(new EmbedBuilder()
                 .setTitle(Constants.cmdChar + c.getName())
-                .setColor(UnUtil.randomColor())
+                .setColor(UnUtil.RandomUtils.randomColor())
                 .setDescription("`" + Constants.cmdChar + c.getName() + " " + c.getSyntax() + "`   " + c.getDescription())
                 .build()).queue();
     }

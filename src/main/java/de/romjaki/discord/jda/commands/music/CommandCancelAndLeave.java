@@ -31,7 +31,7 @@ public class CommandCancelAndLeave implements Command {
         channel.sendMessage(new EmbedBuilder()
                 .setTitle("Cleared the music queue... Now leaving Music Channel")
                 .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
-                .setColor(UnUtil.randomColor())
+                .setColor(UnUtil.RandomUtils.randomColor())
                 .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
     }
 

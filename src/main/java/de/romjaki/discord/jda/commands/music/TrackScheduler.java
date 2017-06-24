@@ -61,8 +61,13 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public void nextTrack(boolean interrupt) {
-        if (queue.isEmpty()) return;
-        player.startTrack(queue.poll(), !interrupt);//startTrack accepts a noInterrupt argument instead of an interrupt argument
+        if (queue.isEmpty() || ((currentTrack() != null) && !interrupt)) {
+            return;
+        }
+        if (interrupt && currentTrack() != null) {
+            player.stopTrack();
+        }
+        player.startTrack(queue.poll(), true);
 
     }
 

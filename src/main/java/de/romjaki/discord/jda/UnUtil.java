@@ -1,9 +1,14 @@
 package de.romjaki.discord.jda;
 
 import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.utils.SimpleLog;
 import org.jetbrains.annotations.Contract;
 
 import java.awt.*;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by RGR on 19.05.2017.
@@ -12,6 +17,17 @@ public class UnUtil {
     @Contract(pure = true, value = " -> fail")
     private UnUtil() {
         UnUtil.singleton(UnUtil.class);
+    }
+
+
+    public static String getWebContent(URL url) {
+        try (Scanner s = new Scanner(url.openStream())) {
+            s.useDelimiter("\\A");
+            return s.next();
+        } catch (IOException e) {
+            SimpleLog.getLog("web").fatal(e);
+        }
+        return null;
     }
 
     @Contract(pure = true, value = "_ -> fail")
@@ -38,10 +54,20 @@ public class UnUtil {
         return s.replace("\\\n", "\n").replace("\\\"", "\"").replace("\\\\", "\\");
     }
 
-    public static Color randomColor() {
-        float r = Constants.random.nextFloat();
-        float g = Constants.random.nextFloat();
-        float b = Constants.random.nextFloat();
-        return new Color(r, g, b);
+    public static class RandomUtils {
+        private RandomUtils() {
+            UnUtil.singleton(RandomUtils.class);
+        }
+
+        public static <T> T choice(List<T> strings) {
+            return strings.get(Constants.random.nextInt(strings.size()));
+        }
+
+        public static Color randomColor() {
+            float r = Constants.random.nextFloat();
+            float g = Constants.random.nextFloat();
+            float b = Constants.random.nextFloat();
+            return new Color(r, g, b);
+        }
     }
 }

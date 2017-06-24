@@ -36,7 +36,7 @@ public class CommandPlayMusic implements Command {
         VoiceChannel vchannel = member.getVoiceState().getChannel();
         if (vchannel == null) {
             channel.sendMessage(new EmbedBuilder()
-                    .setColor(UnUtil.randomColor())
+                    .setColor(UnUtil.RandomUtils.randomColor())
                     .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
                     .setTitle("Error")
                     .setDescription("You have to join a Voice channel.")
@@ -48,7 +48,7 @@ public class CommandPlayMusic implements Command {
         a.setSendingHandler(new MusicSendingHandler(player));
         a.openAudioConnection(vchannel);
         boolean firstOnly = false;
-        if (!isUrl(url)) {
+        if (!isUrl(url) && !url.contains(":")) {
             url = "ytsearch: " + url;
             firstOnly = true;
         }
@@ -60,7 +60,7 @@ public class CommandPlayMusic implements Command {
                 trackScheduler.queue(track);
                 Constants.Loggers.commands.info("Added the track " + track);
                 channel.sendMessage(new EmbedBuilder()
-                        .setColor(UnUtil.randomColor())
+                        .setColor(UnUtil.RandomUtils.randomColor())
                         .setTitle("Added Title to queue", track.getInfo().uri)
                         .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
                         .addField("Name", track.getInfo().title, true)
@@ -83,7 +83,7 @@ public class CommandPlayMusic implements Command {
                         .setTitle("Added Playlist to queue")
                         .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
                         .addField("Title", playlist.getName(), true)
-                        .setColor(UnUtil.randomColor())
+                        .setColor(UnUtil.RandomUtils.randomColor())
                         .addField("Duration", playlist.getTracks().stream().map(AudioTrack::getDuration).reduce(Math::addExact) + "", true)
                         .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
             }
@@ -102,8 +102,9 @@ public class CommandPlayMusic implements Command {
     }
 
     private boolean isUrl(String url) {
-        return url.matches("(?i)^http[s]://\\w+\\.+\\w+.*");
+        return url.matches("(?i)^(http[s]://)?\\w+\\.\\w+.*");
     }
+
 
     @Override
     public Category getCategory() {

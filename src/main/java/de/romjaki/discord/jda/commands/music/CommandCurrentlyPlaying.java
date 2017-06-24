@@ -34,7 +34,7 @@ public class CommandCurrentlyPlaying implements Command {
         AudioTrack track = Main.trackScheduler.currentTrack();
         if (track == null) {
             channel.sendMessage(new EmbedBuilder()
-                    .setColor(UnUtil.randomColor())
+                    .setColor(UnUtil.RandomUtils.randomColor())
                     .setTitle("Currently Playing:")
                     .setDescription("Currently the queue is empty")
                     .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
@@ -42,7 +42,7 @@ public class CommandCurrentlyPlaying implements Command {
             return;
         }
         channel.sendMessage(new EmbedBuilder()
-                .setColor(UnUtil.randomColor())
+                .setColor(UnUtil.RandomUtils.randomColor())
                 .setTitle("Currently Playing:")
                 .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
                 .addField("Name", track.getInfo().title, true)

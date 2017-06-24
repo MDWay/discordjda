@@ -9,10 +9,11 @@ import de.romjaki.discord.jda.commands.admin.CommandEval;
 import de.romjaki.discord.jda.commands.admin.CommandPermission;
 import de.romjaki.discord.jda.commands.category.CategoryAdmin;
 import de.romjaki.discord.jda.commands.category.CategoryDefault;
-import de.romjaki.discord.jda.commands.category.CategoryImages;
 import de.romjaki.discord.jda.commands.category.CategoryMusic;
-import de.romjaki.discord.jda.commands.images.CommandAvasDemon;
+import de.romjaki.discord.jda.commands.category.CategoryWebContent;
 import de.romjaki.discord.jda.commands.music.*;
+import de.romjaki.discord.jda.commands.web.CommandAvasDemon;
+import de.romjaki.discord.jda.commands.web.CommandPostillon;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -78,7 +79,7 @@ public class Main {
     }
 
     private static void registerCategories() {
-        Commands.addCategory(new CategoryImages());
+        Commands.addCategory(new CategoryWebContent());
         Commands.addCategory(new CategoryDefault());
         Commands.addCategory(new CategoryMusic());
         Commands.addCategory(new CategoryAdmin());
@@ -96,6 +97,7 @@ public class Main {
         Commands.addCommand(new CommandPlayMusic());
         Commands.addCommand(new CommandSkipMusic());
         Commands.addCommand(new CommandCancelAndLeave());
+        Commands.addCommand(new CommandPostillon());
         Commands.addCommand(new CommandEval());
         Commands.addCommand(new CommandProgBar());
         Commands.addCommand(new CommandCredits());

@@ -30,7 +30,7 @@ public class CommandAddChuck implements Command {
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
         Constants.Chuck.add(String.join(" ", args));
         channel.sendMessage(new EmbedBuilder()
-                .setColor(UnUtil.randomColor())
+                .setColor(UnUtil.RandomUtils.randomColor())
                 .setTitle("Joke added")
                 .setDescription(String.join(" ", args))
                 .build())

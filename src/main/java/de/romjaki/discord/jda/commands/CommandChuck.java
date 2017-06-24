@@ -23,7 +23,7 @@ public class CommandChuck implements Command {
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
         String joke = Constants.Chuck.jokes.get(Constants.random.nextInt(Constants.Chuck.jokes.size()));
         channel.sendMessage(new EmbedBuilder()
-                .setColor(UnUtil.randomColor())
+                .setColor(UnUtil.RandomUtils.randomColor())
                 .setTitle(new String[]{"Chuck Worries Joke", "Chuck Norris Joke"}[Constants.random.nextInt(2)])
                 .setDescription(joke)
                 .build()).queue();
@@ -37,7 +37,7 @@ public class CommandChuck implements Command {
 
     @Override
     public String getDescription() {
-        return "Random chuck norris witz!";
+        return "RandomUtils chuck norris witz!";
     }
 
     @Override

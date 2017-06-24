@@ -39,7 +39,7 @@ public class CommandPermission implements Command {
             Permissions.updatePermission(message.getMentionedUsers().get(0), perm -> perm & ~Permissions.getAsFlag(args[2]));
         }
         channel.sendMessage(new EmbedBuilder()
-                .setColor(UnUtil.randomColor())
+                .setColor(UnUtil.RandomUtils.randomColor())
                 .setTitle("Updated Permissions")
                 .setDescription(message.getMentionedUsers().get(0).getAsMention() + " has now the permissions `0b" + Integer.toBinaryString(Permissions.getPermissions(message.getMentionedUsers().get(0))) + "`")
                 .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));

@@ -1,4 +1,4 @@
-package de.romjaki.discord.jda.commands.images;
+package de.romjaki.discord.jda.commands.web;
 
 import de.romjaki.discord.jda.Command;
 import de.romjaki.discord.jda.Commands;
@@ -69,7 +69,7 @@ public class CommandAvasDemon extends ListenerAdapter implements Command {
 
     @Override
     public Category getCategory() {
-        return Commands.getCategory("images");
+        return Commands.getCategory("web");
     }
 
     @Override
@@ -102,7 +102,7 @@ public class CommandAvasDemon extends ListenerAdapter implements Command {
 
     private void sendComic(int id, TextChannel channel) {
         channel.sendMessage(new EmbedBuilder()
-                .setColor(UnUtil.randomColor())
+                .setColor(UnUtil.RandomUtils.randomColor())
                 .setTitle("Avas Demon")
                 .setFooter(String.format(AVAS_DEMON_FOOTER, id), AVAS_DEMON_START_URL)
                 .setImage(String.format(AVAS_DEMON_URL, id))

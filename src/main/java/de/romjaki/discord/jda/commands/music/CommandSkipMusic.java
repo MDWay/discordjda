@@ -31,7 +31,7 @@ public class CommandSkipMusic implements Command {
         AudioTrack track = Main.player.getPlayingTrack();
         Main.trackScheduler.nextTrack(true);
         channel.sendMessage(new EmbedBuilder()
-                .setColor(UnUtil.randomColor())
+                .setColor(UnUtil.RandomUtils.randomColor())
                 .setTitle("Skipped title")
                 .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
                 .setDescription(track.getInfo().title)

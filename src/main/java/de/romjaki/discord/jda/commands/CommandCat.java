@@ -22,7 +22,7 @@ public class CommandCat implements Command {
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message m) {
         channel.sendMessage(new EmbedBuilder()
                 .setDescription(String.join(" ", args))
-                .setColor(UnUtil.randomColor())
+                .setColor(UnUtil.RandomUtils.randomColor())
                 .build()).queue();
         m.delete().queue();
     }
