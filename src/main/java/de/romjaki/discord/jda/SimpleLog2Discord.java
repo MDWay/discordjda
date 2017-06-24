@@ -13,6 +13,9 @@ public class SimpleLog2Discord {
             @Override
             public void onLog(SimpleLog log, SimpleLog.Level logLevel, Object message) {
                 String name = log.name;
+                if (name.contains("unlogged")) {
+                    return;
+                }
                 String content = message + "";
                 if (logLevel == SimpleLog.Level.TRACE || logLevel == SimpleLog.Level.DEBUG) return;
                 if (!channel.canTalk()) return;

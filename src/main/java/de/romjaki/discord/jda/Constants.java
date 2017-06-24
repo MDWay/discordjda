@@ -38,7 +38,31 @@ public class Constants {
     public static void initEmotes(JDA jda) {
     }
 
-    public static class BotUser {
+    public static class SpotifyUser {
+        public static String CLIENT_SECRET = "token-invalid";
+        public static String CLIENT_ID = "token-invalid";
+
+        static {
+            try (Scanner s = new Scanner(new File(Config.path + "spotify.id"))) {
+                s.useDelimiter("\\A");
+                CLIENT_ID = s.next();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            try (Scanner s = new Scanner(new File(Config.path + "spotify.secret"))) {
+                s.useDelimiter("\\A");
+                CLIENT_SECRET = s.next();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private SpotifyUser() {
+            UnUtil.singleton(SpotifyUser.class);
+        }
+    }
+
+    public static class DiscordUser {
         public static final String NAME = "api-testing-rom";
         public static final int NUMBER = 9515;
         public static final String USERTAG = NAME + "#" + NUMBER;
@@ -53,8 +77,8 @@ public class Constants {
             }
         }
 
-        private BotUser() {
-            UnUtil.singleton(BotUser.class);
+        private DiscordUser() {
+            UnUtil.singleton(DiscordUser.class);
         }
     }
 

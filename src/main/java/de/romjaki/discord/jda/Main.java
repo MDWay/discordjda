@@ -55,7 +55,7 @@ public class Main {
         player.addListener(trackScheduler);
         try {
             jda = new JDABuilder(AccountType.BOT)
-                    .setToken(Constants.BotUser.TOKEN)
+                    .setToken(Constants.DiscordUser.TOKEN)
                     .setAutoReconnect(true)
                     .setStatus(OnlineStatus.ONLINE)
                     .setGame(Constants.gameMessage)

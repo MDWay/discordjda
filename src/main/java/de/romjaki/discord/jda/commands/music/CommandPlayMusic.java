@@ -1,5 +1,9 @@
 package de.romjaki.discord.jda.commands.music;
 
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.apache.ApacheHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson.JacksonFactory;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
@@ -11,6 +15,8 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.managers.AudioManager;
 
+import java.util.regex.Pattern;
+
 import static de.romjaki.discord.jda.Main.*;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -18,12 +24,63 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  * Created by RGR on 09.06.2017.
  */
 public class CommandPlayMusic implements Command {
+
     static {
         Permissions.addFlag("playMusic", 2);
     }
 
     public static String durationFormat(long duration) {
         return String.format("%02d:%02d", duration / 1000 / 60, duration / 1000 % 60);
+    }
+
+    private static void play(AudioManager a, TextChannel channel, String url, boolean fFirstOnly, boolean display) {
+
+        playerManager.loadItemOrdered(a, url, new AudioLoadResultHandler() {
+            @Override
+            public void trackLoaded(AudioTrack track) {
+                trackScheduler.queue(track);
+                Constants.Loggers.commands.info("Added the track " + track);
+                if (display)
+                    channel.sendMessage(new EmbedBuilder()
+                            .setColor(UnUtil.RandomUtils.randomColor())
+                            .setTitle("Added Title to queue", track.getInfo().uri)
+                            .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
+                            .addField("Name", track.getInfo().title, true)
+                            .addField("Interpret", track.getInfo().author, true)
+                            .addField("Duration", durationFormat(track.getDuration()), true)
+                            .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
+            }
+
+            @Override
+            public void playlistLoaded(AudioPlaylist playlist) {
+                if (fFirstOnly) {
+                    trackLoaded(playlist.getTracks().get(0));
+                    return;
+                }
+                for (AudioTrack track : playlist.getTracks()) {
+                    trackScheduler.queue(track);
+                    Constants.Loggers.commands.info("Added the track " + track);
+                }
+                if (display)
+                    channel.sendMessage(new EmbedBuilder()
+                            .setTitle("Added Playlist to queue")
+                            .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
+                            .addField("Title", playlist.getName(), true)
+                            .setColor(UnUtil.RandomUtils.randomColor())
+                            .addField("Duration", playlist.getTracks().stream().map(AudioTrack::getDuration).reduce(Math::addExact) + "", true)
+                            .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
+            }
+
+            @Override
+            public void noMatches() {
+                Constants.Loggers.commands.fatal("Failed to fetch the music: " + url);
+            }
+
+            @Override
+            public void loadFailed(FriendlyException e) {
+                Constants.Loggers.commands.fatal("Failed to fetch music: " + e);
+            }
+        });
     }
 
     @Override
@@ -52,53 +109,7 @@ public class CommandPlayMusic implements Command {
             url = "ytsearch: " + url;
             firstOnly = true;
         }
-        boolean fFirstOnly = firstOnly;
-        String fUrl = url;
-        playerManager.loadItemOrdered(a, url, new AudioLoadResultHandler() {
-            @Override
-            public void trackLoaded(AudioTrack track) {
-                trackScheduler.queue(track);
-                Constants.Loggers.commands.info("Added the track " + track);
-                channel.sendMessage(new EmbedBuilder()
-                        .setColor(UnUtil.RandomUtils.randomColor())
-                        .setTitle("Added Title to queue", track.getInfo().uri)
-                        .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
-                        .addField("Name", track.getInfo().title, true)
-                        .addField("Interpret", track.getInfo().author, true)
-                        .addField("Duration", durationFormat(track.getDuration()), true)
-                        .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
-            }
-
-            @Override
-            public void playlistLoaded(AudioPlaylist playlist) {
-                if (fFirstOnly) {
-                    trackLoaded(playlist.getTracks().get(0));
-                    return;
-                }
-                for (AudioTrack track : playlist.getTracks()) {
-                    trackScheduler.queue(track);
-                    Constants.Loggers.commands.info("Added the track " + track);
-                }
-                channel.sendMessage(new EmbedBuilder()
-                        .setTitle("Added Playlist to queue")
-                        .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
-                        .addField("Title", playlist.getName(), true)
-                        .setColor(UnUtil.RandomUtils.randomColor())
-                        .addField("Duration", playlist.getTracks().stream().map(AudioTrack::getDuration).reduce(Math::addExact) + "", true)
-                        .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
-            }
-
-            @Override
-            public void noMatches() {
-                Constants.Loggers.commands.fatal("Failed to fetch the music: " + fUrl);
-            }
-
-            @Override
-            public void loadFailed(FriendlyException e) {
-                Constants.Loggers.commands.fatal("Failed to fetch music: " + e);
-            }
-        });
-
+        play(a, channel, url, firstOnly, true);
     }
 
     private boolean isUrl(String url) {
@@ -123,7 +134,7 @@ public class CommandPlayMusic implements Command {
 
     @Override
     public String getSyntax() {
-        return "<yt-url>";
+        return "<query>";
     }
 
     @Override
