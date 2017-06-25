@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static de.romjaki.discord.jda.Main.trackScheduler;
 
 /**
  * Created by RGR on 25.06.2017.
@@ -31,8 +30,12 @@ public class CommandQueue implements Command {
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
         EmbedBuilder eB = new EmbedBuilder()
                 .setColor(UnUtil.RandomUtils.randomColor());
-        eB.setDescription("Current Track: " + trackScheduler.currentTrack().getInfo().title + " " +
-                "by " + trackScheduler.currentTrack().getInfo().author);
+        TrackScheduler trackScheduler = CommandPlayMusic.getGuildAudioPlayer(guild).scheduler;
+        try {
+            eB.setDescription("Current Track: " + trackScheduler.currentTrack().getInfo().title + " " +
+                    "by " + trackScheduler.currentTrack().getInfo().author);
+        } catch (Exception ignored) {
+        }
         List<AudioTrack> q = new ArrayList<>(trackScheduler.queue());
         long[] time = {trackScheduler.currentTrack().getDuration() - trackScheduler.currentTrack().getPosition()};
         IntStream.range(0, Math.min(q.size(), 15)).forEach(value -> {

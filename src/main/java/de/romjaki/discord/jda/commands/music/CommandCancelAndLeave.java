@@ -2,7 +2,6 @@ package de.romjaki.discord.jda.commands.music;
 
 import de.romjaki.discord.jda.Command;
 import de.romjaki.discord.jda.Commands;
-import de.romjaki.discord.jda.Main;
 import de.romjaki.discord.jda.UnUtil;
 import de.romjaki.discord.jda.commands.Category;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -26,7 +25,7 @@ public class CommandCancelAndLeave implements Command {
 
     @Override
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
-        Main.trackScheduler.cancelAll();
+        CommandPlayMusic.getGuildAudioPlayer(guild).scheduler.cancelAll();
         guild.getAudioManager().closeAudioConnection();
         channel.sendMessage(new EmbedBuilder()
                 .setTitle("Cleared the music queue... Now leaving Music Channel")

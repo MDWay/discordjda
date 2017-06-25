@@ -1,9 +1,5 @@
 package de.romjaki.discord.jda;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import de.romjaki.discord.jda.commands.*;
 import de.romjaki.discord.jda.commands.admin.CommandEval;
 import de.romjaki.discord.jda.commands.admin.CommandPermission;
@@ -33,9 +29,6 @@ import java.util.Optional;
  */
 public class Main {
     public static JDA jda;
-    public static AudioPlayerManager playerManager;
-    public static TrackScheduler trackScheduler;
-    public static AudioPlayer player;
 
 
     @Contract(" -> fail")
@@ -48,11 +41,6 @@ public class Main {
         registerCategories();
         registerCommands();
         //For Lava Player
-        playerManager = new DefaultAudioPlayerManager();
-        AudioSourceManagers.registerRemoteSources(playerManager);
-        player = Main.playerManager.createPlayer();
-        trackScheduler = new TrackScheduler(player);
-        player.addListener(trackScheduler);
         try {
             jda = new JDABuilder(AccountType.BOT)
                     .setToken(Constants.DiscordUser.TOKEN)

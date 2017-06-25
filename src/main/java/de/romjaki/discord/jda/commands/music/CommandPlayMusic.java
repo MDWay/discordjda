@@ -1,10 +1,9 @@
 package de.romjaki.discord.jda.commands.music;
 
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.apache.ApacheHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson.JacksonFactory;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
@@ -15,9 +14,10 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.managers.AudioManager;
 
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.Map;
 
-import static de.romjaki.discord.jda.Main.*;
+import static de.romjaki.discord.jda.Main.jda;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
@@ -25,20 +25,35 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  */
 public class CommandPlayMusic implements Command {
 
+    private static AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
+    private static Map<String, GuildMusicManager> musicManagers = new HashMap<>();
+
     static {
         Permissions.addFlag("playMusic", 2);
+
+        AudioSourceManagers.registerRemoteSources(playerManager);
+        AudioSourceManagers.registerLocalSource(playerManager);
+    }
+
+    public static synchronized GuildMusicManager getGuildAudioPlayer(Guild guild) {
+        GuildMusicManager musicManager = musicManagers.computeIfAbsent(guild.getId(), k -> new GuildMusicManager(playerManager));
+
+        guild.getAudioManager().setSendingHandler(musicManager.getSendHandler());
+
+        return musicManager;
     }
 
     public static String durationFormat(long duration) {
         return String.format("%02d:%02d", duration / 1000 / 60, duration / 1000 % 60);
     }
 
-    private static void play(AudioManager a, TextChannel channel, String url, boolean fFirstOnly, boolean display) {
+    public static void play(Guild g, TextChannel channel, String url, boolean fFirstOnly, boolean display) {
+        GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
 
-        playerManager.loadItemOrdered(a, url, new AudioLoadResultHandler() {
+        playerManager.loadItemOrdered(musicManager, url, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
-                trackScheduler.queue(track);
+                musicManager.scheduler.queue(track);
                 Constants.Loggers.commands.info("Added the track " + track);
                 if (display)
                     channel.sendMessage(new EmbedBuilder()
@@ -58,7 +73,7 @@ public class CommandPlayMusic implements Command {
                     return;
                 }
                 for (AudioTrack track : playlist.getTracks()) {
-                    trackScheduler.queue(track);
+                    musicManager.scheduler.queue(track);
                     Constants.Loggers.commands.info("Added the track " + track);
                 }
                 if (display)
@@ -102,17 +117,16 @@ public class CommandPlayMusic implements Command {
         }
         String url = String.join(" ", args);
         AudioManager a = guild.getAudioManager();
-        a.setSendingHandler(new MusicSendingHandler(player));
         a.openAudioConnection(vchannel);
         boolean firstOnly = false;
         if (!isUrl(url) && !url.contains(":")) {
             url = "ytsearch: " + url;
             firstOnly = true;
         }
-        play(a, channel, url, firstOnly, true);
+        play(guild, channel, url, firstOnly, true);
     }
 
-    private boolean isUrl(String url) {
+    public boolean isUrl(String url) {
         return url.matches("(?i)^(http[s]://)?\\w+\\.\\w+.*");
     }
 

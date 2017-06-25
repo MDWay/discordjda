@@ -3,7 +3,6 @@ package de.romjaki.discord.jda.commands.music;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import de.romjaki.discord.jda.Command;
 import de.romjaki.discord.jda.Commands;
-import de.romjaki.discord.jda.Main;
 import de.romjaki.discord.jda.UnUtil;
 import de.romjaki.discord.jda.commands.Category;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -31,7 +30,7 @@ public class CommandCurrentlyPlaying implements Command {
 
     @Override
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
-        AudioTrack track = Main.trackScheduler.currentTrack();
+        AudioTrack track = CommandPlayMusic.getGuildAudioPlayer(guild).scheduler.currentTrack();
         if (track == null) {
             channel.sendMessage(new EmbedBuilder()
                     .setColor(UnUtil.RandomUtils.randomColor())
