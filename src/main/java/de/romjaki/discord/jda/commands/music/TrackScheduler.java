@@ -24,26 +24,20 @@ public class TrackScheduler extends AudioEventAdapter {
 
     @Override
     public void onPlayerPause(AudioPlayer player) {
-        // Player was paused
     }
 
     @Override
     public void onPlayerResume(AudioPlayer player) {
-        // Player was resumed
     }
 
     @Override
     public void onTrackStart(AudioPlayer player, AudioTrack track) {
-        // A track started playing
     }
 
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         if (endReason.mayStartNext) {
-            if (queue.isEmpty()) {
-                return;
-            }
-            nextTrack(false);
+            nextTrack(true);
         }
     }
 
@@ -74,6 +68,10 @@ public class TrackScheduler extends AudioEventAdapter {
     @Override
     public void onEvent(AudioEvent audioEvent) {
 
+    }
+
+    public Queue<AudioTrack> queue() {
+        return queue;
     }
 
     public void queue(AudioTrack track) {

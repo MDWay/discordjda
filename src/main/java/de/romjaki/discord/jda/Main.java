@@ -94,6 +94,7 @@ public class Main {
         Commands.addCommand(new CommandChuck());
         Commands.addCommand(new CommandAddChuck());
         Commands.addCommand(new CommandPermission());
+        Commands.addCommand(new CommandQueue());
         Commands.addCommand(new CommandPlayMusic());
         Commands.addCommand(new CommandSkipMusic());
         Commands.addCommand(new CommandCancelAndLeave());
