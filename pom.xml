@@ -38,7 +38,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>${jda.version}</version>
+            <version>3.1.1_212</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -65,7 +65,4 @@
         </repository>
     </repositories>
 
-    <properties>
-        <jda.version>3.1.1_212</jda.version>
-    </properties>
 </project>
