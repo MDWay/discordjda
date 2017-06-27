@@ -2,7 +2,6 @@ package de.romjaki.discord.jda;
 
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.utils.SimpleLog;
-import org.jetbrains.annotations.Contract;
 
 import java.awt.*;
 import java.io.IOException;
@@ -14,7 +13,6 @@ import java.util.Scanner;
  * Created by RGR on 19.05.2017.
  */
 public class UnUtil {
-    @Contract(pure = true, value = " -> fail")
     private UnUtil() {
         UnUtil.singleton(UnUtil.class);
     }
@@ -30,18 +28,15 @@ public class UnUtil {
         return null;
     }
 
-    @Contract(pure = true, value = "_ -> fail")
     public static void singleton(Class<?> clazz) {
         throw new Error("No " + clazz.toGenericString() + " instances for you!");
     }
 
-    @Contract(pure = true, value = "null -> fail")
     public static boolean isBotChannel(TextChannel channel) {
         return channel.getName().toLowerCase().contains("bot");
     }
 
 
-    @Contract(pure = true, value = "null -> fail ; !null -> !null")
     public static String escape(String join) {
         return join.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n");
     }

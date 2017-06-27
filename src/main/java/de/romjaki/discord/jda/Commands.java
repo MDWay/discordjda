@@ -2,9 +2,6 @@ package de.romjaki.discord.jda;
 
 import de.romjaki.discord.jda.commands.Category;
 import net.dv8tion.jda.core.JDA;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -15,12 +12,10 @@ public class Commands {
     private static Set<Command> commands = new HashSet<>();
     private static Set<Category> categories = new HashSet<>();
 
-    @Contract(" -> fail")
     private Commands() {
         UnUtil.singleton(Commands.class);
     }
 
-    @NotNull
     public static Collection<Command> getCommands() {
         return Collections.unmodifiableCollection(commands);
     }
@@ -29,15 +24,12 @@ public class Commands {
         return commands.add(command);
     }
 
-    @Contract(pure = true, value = "null -> fail")
-    @Nullable
     public static Command getCommand(String name) {
         Objects.requireNonNull(name);
         return getCommands().stream().filter(com -> com.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
 
-    @NotNull
     public static Collection<Category> getCategories() {
         return Collections.unmodifiableCollection(categories);
     }

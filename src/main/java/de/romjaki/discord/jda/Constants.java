@@ -4,7 +4,6 @@ import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.utils.SimpleLog;
-import org.jetbrains.annotations.Contract;
 
 import java.io.*;
 import java.util.*;
@@ -33,7 +32,6 @@ public class Constants {
         }
     }
 
-    @Contract(" -> fail")
     private Constants() {
         UnUtil.singleton(Constants.class);
     }

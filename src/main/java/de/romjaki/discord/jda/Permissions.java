@@ -2,7 +2,6 @@ package de.romjaki.discord.jda;
 
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.User;
-import org.jetbrains.annotations.Contract;
 
 import java.io.*;
 import java.util.HashMap;
@@ -18,7 +17,6 @@ public class Permissions {
     private static final Map<String, Integer> flagMap = new HashMap<>();
     public static File permissionFile = new File(Constants.Config.path + "permissions.csv");
 
-    @Contract(" -> fail")
     private Permissions() {
         UnUtil.singleton(Permissions.class);
     }

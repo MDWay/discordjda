@@ -18,7 +18,6 @@ import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
-import org.jetbrains.annotations.Contract;
 
 import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
@@ -35,7 +34,6 @@ public class Main {
     public static boolean ownerCompleted = false;
     private static boolean fullyUpAndRunning = false;
 
-    @Contract(" -> fail")
     private Main() {
         UnUtil.singleton(Main.class);
     }
