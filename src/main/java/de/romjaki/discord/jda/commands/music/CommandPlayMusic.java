@@ -109,7 +109,7 @@ public class CommandPlayMusic implements Command {
         if (vchannel == null) {
             channel.sendMessage(new EmbedBuilder()
                     .setColor(UnUtil.RandomUtils.randomColor())
-                    .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
+                    .setFooter(getCategory().getName(), jda.getSelfUser().getEffectiveAvatarUrl())
                     .setTitle("Error")
                     .setDescription("You have to join a Voice channel.")
                     .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));

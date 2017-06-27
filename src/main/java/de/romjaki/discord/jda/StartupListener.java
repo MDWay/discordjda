@@ -7,6 +7,8 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.util.StringJoiner;
 
+import static de.romjaki.discord.jda.Constants.OWNER;
+
 /**
  * Created by RGR on 19.05.2017.
  */
@@ -20,7 +22,6 @@ public class StartupListener extends ListenerAdapter {
             sj.add(String.format("* %s(%s)", g.getName(), g.getId()));
         }
         Constants.Loggers.startup.info(sj.toString());
-
     }
 
     @Override

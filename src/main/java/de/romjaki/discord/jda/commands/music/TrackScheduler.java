@@ -36,13 +36,14 @@ public class TrackScheduler extends AudioEventAdapter {
 
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
+        SimpleLog.getLog("music").info("Starting next track....");
         nextTrack(true);
     }
 
     @Override
     public void onTrackException(AudioPlayer player, AudioTrack track, FriendlyException exception) {
-        nextTrack(true);
         SimpleLog.getLog("music").fatal(exception);
+        nextTrack(true);
     }
 
     @Override
@@ -52,15 +53,14 @@ public class TrackScheduler extends AudioEventAdapter {
         }
     }
 
-    public void nextTrack(boolean interrupt) {
+    public void nextTrack(boolean interrupt) {/*
         if (queue.isEmpty() || ((currentTrack() != null) && !interrupt)) {
             return;
         }
         if (interrupt && currentTrack() != null) {
             player.stopTrack();
-        }
-        player.startTrack(queue.poll(), true);
-
+        }*/
+        player.startTrack(queue.poll(), !interrupt);
     }
 
     @Override

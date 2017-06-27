@@ -37,7 +37,7 @@ public class CommandSkipMusic implements Command {
         channel.sendMessage(new EmbedBuilder()
                 .setColor(UnUtil.RandomUtils.randomColor())
                 .setTitle("Skipped title")
-                .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
+                .setFooter(getCategory().getName(), jda.getSelfUser().getEffectiveAvatarUrl())
                 .setDescription(track.getInfo().title)
                 .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
     }

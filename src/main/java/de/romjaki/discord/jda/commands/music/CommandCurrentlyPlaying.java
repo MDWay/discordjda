@@ -36,14 +36,14 @@ public class CommandCurrentlyPlaying implements Command {
                     .setColor(UnUtil.RandomUtils.randomColor())
                     .setTitle("Currently Playing:")
                     .setDescription("Currently the queue is empty")
-                    .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
+                    .setFooter(getCategory().getName(), jda.getSelfUser().getEffectiveAvatarUrl())
                     .build()).queue();
             return;
         }
         channel.sendMessage(new EmbedBuilder()
                 .setColor(UnUtil.RandomUtils.randomColor())
                 .setTitle("Currently Playing:")
-                .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
+                .setFooter(getCategory().getName(), jda.getSelfUser().getEffectiveAvatarUrl())
                 .addField("Name", track.getInfo().title, true)
                 .addField("Interpret", track.getInfo().author, true)
                 .addField("Duration", CommandPlayMusic.durationFormat(track.getDuration()), true)

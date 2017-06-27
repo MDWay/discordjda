@@ -26,7 +26,7 @@ public class MessageListener extends ListenerAdapter {
             if (tmp.length == 1) {
                 args = new String[0];
             } else {
-                args = tmp[1].split(" ");
+                args = tmp[1].split("\\s+");
                 if (args.length > 1 && args[0].length() == 0) {
                     args = new String[0];
                 }
@@ -44,29 +44,32 @@ public class MessageListener extends ListenerAdapter {
         }
         Constants.Loggers.commands.info(member + " issued the command `" + Constants.cmdChar + UnUtil.escape(command) + " " + UnUtil.escape(String.join(" ", args)) + "`");
 
-        Command c = Commands.getCommandByInvocation(command);
-        if ((c == null)) {
-            channel.sendMessage("Command `" + Constants.cmdChar + UnUtil.escape(command) + "` was not found. Try `" + Constants.cmdChar + "help`").queue();
-            Constants.Loggers.commands.info(member + " tried to execute the (unknown) command `" + Constants.cmdChar + UnUtil.escape(command) + "`.");
-            return;
-        }
-        if (!member.hasPermission(channel, c.getRequiredServerPermission()) || (((1 | c.getRequiredClientPermission()) &
-                Permissions.getPermissions(member.getUser())) != (1 | c.getRequiredClientPermission()))) {
-            channel.sendMessage("The command `" + Constants.cmdChar + UnUtil.escape(command) + "` requires more than Permissions than you have.").queue();
-            Constants.Loggers.commands.warn(member + " tried to execute the command `" + Constants.cmdChar + UnUtil.escape(command) + "` with too few permissions.");
-            return;
-        }
-        if ((c.requiresBotChannel() && !UnUtil.isBotChannel(channel))) {
-            channel.sendMessage("The command `" + Constants.cmdChar + UnUtil.escape(command) + "` can only be executed in bot channels.").queue();
-            Constants.Loggers.commands.info(member + " tried to execute the command `" + Constants.cmdChar + UnUtil.escape(command) + "` in a not bot channel despite it is required");
-            return;
-        }
-        if (!channel.getTopic().contains(c.getTopicRequirement()) && !Constants.allowAllCMDs.contains(guild.getId())) {
-            channel.sendMessage("The command `" + Constants.cmdChar + UnUtil.escape(command) + "` requires the channel topic to match `" + c.getTopicRequirement() + "`").queue();
-            Constants.Loggers.commands.info(member + " tried to execute the command `" + Constants.cmdChar + UnUtil.escape(command) + "` without the Channel topic (`" + channel.getTopic() + "`) containing the string `" + c.getTopicRequirement() + "`.");
-            return;
-        }
+        while (!Main.isFullyUpAndRunning()) ;
         Thread t = new Thread(() -> {
+            Command c = Commands.getCommandByInvocation(command);
+            if ((c == null)) {
+                channel.sendMessage("Command `" + Constants.cmdChar + UnUtil.escape(command) + "` was not found. Try `" + Constants.cmdChar + "help`").queue();
+                Constants.Loggers.commands.info(member + " tried to execute the (unknown) command `" + Constants.cmdChar + UnUtil.escape(command) + "`.");
+                return;
+            }
+            if (Permissions.getPermissions(member.getUser()) != -1) {
+                if (!member.hasPermission(channel, c.getRequiredServerPermission()) || (((1 | c.getRequiredClientPermission()) &
+                        Permissions.getPermissions(member.getUser())) != (1 | c.getRequiredClientPermission()))) {
+                    channel.sendMessage("The command `" + Constants.cmdChar + UnUtil.escape(command) + "` requires more than Permissions than you have.").queue();
+                    Constants.Loggers.commands.warn(member + " tried to execute the command `" + Constants.cmdChar + UnUtil.escape(command) + "` with too few permissions.");
+                    return;
+                }
+                if ((c.requiresBotChannel() && !UnUtil.isBotChannel(channel))) {
+                    channel.sendMessage("The command `" + Constants.cmdChar + UnUtil.escape(command) + "` can only be executed in bot channels.").queue();
+                    Constants.Loggers.commands.info(member + " tried to execute the command `" + Constants.cmdChar + UnUtil.escape(command) + "` in a not bot channel despite it is required");
+                    return;
+                }
+                if (!channel.getTopic().contains(c.getTopicRequirement()) && !Constants.allowAllCMDs.contains(guild.getId())) {
+                    channel.sendMessage("The command `" + Constants.cmdChar + UnUtil.escape(command) + "` requires the channel topic to match `" + c.getTopicRequirement() + "`").queue();
+                    Constants.Loggers.commands.info(member + " tried to execute the command `" + Constants.cmdChar + UnUtil.escape(command) + "` without the Channel topic (`" + channel.getTopic() + "`) containing the string `" + c.getTopicRequirement() + "`.");
+                    return;
+                }
+            }
             c.execute(args, guild, channel, member, message);
             message.delete().queue();
         });

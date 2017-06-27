@@ -2,11 +2,13 @@ package de.romjaki.discord.jda;
 
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.utils.SimpleLog;
 import org.jetbrains.annotations.Contract;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * Created by RGR on 19.05.2017.
@@ -17,6 +19,7 @@ public class Constants {
     public static List<String> allowAllCMDs = new ArrayList<>();
     public static Random random = new Random();
     public static Map<String, String> progBars = new HashMap<>();
+    public static User OWNER = null;
 
     static {
         allowAllCMDs.add("316125040917872660");//Leshs Kuhler server
@@ -35,8 +38,13 @@ public class Constants {
         UnUtil.singleton(Constants.class);
     }
 
-    public static void initEmotes(JDA jda) {
+    public static void loadOwner(JDA jda, Consumer<User> loaded) {
+        jda.asBot().getApplicationInfo().queue(applicationInfo -> {
+            OWNER = applicationInfo.getOwner();
+            loaded.accept(OWNER);
+        });
     }
+
 
     public static class SpotifyUser {
         public static String CLIENT_SECRET = "token-invalid";

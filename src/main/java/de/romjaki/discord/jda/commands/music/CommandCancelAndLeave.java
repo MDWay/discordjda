@@ -29,7 +29,7 @@ public class CommandCancelAndLeave implements Command {
         guild.getAudioManager().closeAudioConnection();
         channel.sendMessage(new EmbedBuilder()
                 .setTitle("Cleared the music queue... Now leaving Music Channel")
-                .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
+                .setFooter(getCategory().getName(), jda.getSelfUser().getEffectiveAvatarUrl())
                 .setColor(UnUtil.RandomUtils.randomColor())
                 .build()).queue(msg -> msg.delete().queueAfter(5, SECONDS));
     }

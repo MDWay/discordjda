@@ -2,6 +2,8 @@ package de.romjaki.discord.jda;
 
 import de.romjaki.discord.jda.commands.*;
 import de.romjaki.discord.jda.commands.admin.CommandEval;
+import de.romjaki.discord.jda.commands.admin.CommandInvites;
+import de.romjaki.discord.jda.commands.admin.CommandMove;
 import de.romjaki.discord.jda.commands.admin.CommandPermission;
 import de.romjaki.discord.jda.commands.category.CategoryAdmin;
 import de.romjaki.discord.jda.commands.category.CategoryDefault;
@@ -29,7 +31,9 @@ import java.util.Optional;
  */
 public class Main {
     public static JDA jda;
-
+    public static boolean mainCompleted = false;
+    public static boolean ownerCompleted = false;
+    private static boolean fullyUpAndRunning = false;
 
     @Contract(" -> fail")
     private Main() {
@@ -49,6 +53,7 @@ public class Main {
                     .setGame(Constants.gameMessage)
                     .addEventListener(new StartupListener())
                     .addEventListener(new MessageListener())
+                    .addEventListener(new LoginListener())
                     .buildBlocking();
         } catch (LoginException | InterruptedException | RateLimitedException e) {
             Constants.Loggers.startup.fatal("Error occurred during log in: " + e);
@@ -56,8 +61,9 @@ public class Main {
         }
         findLogChannel().ifPresent(SimpleLog2Discord::addLogChannel);
         Permissions.readPermissions(jda);
-        Constants.initEmotes(jda);
         Commands.registerHandles(jda);
+        Constants.loadOwner(jda, u -> ownerCompleted = true);
+        mainCompleted = true;
     }
 
     private static Optional<TextChannel> findLogChannel() {
@@ -76,8 +82,10 @@ public class Main {
     private static void registerCommands() {
         Commands.addCommand(new CommandAvasDemon());
         Commands.addCommand(new CommandCat());
+        Commands.addCommand(new CommandInvites());
         Commands.addCommand(new CommandHelp());
         Commands.addCommand(new CommandCountdown());
+        Commands.addCommand(new CommandMove());
         Commands.addCommand(new CommandPing());
         Commands.addCommand(new CommandChuck());
         Commands.addCommand(new CommandAddChuck());
@@ -91,5 +99,12 @@ public class Main {
         Commands.addCommand(new CommandProgBar());
         Commands.addCommand(new CommandCredits());
         Commands.addCommand(new CommandCurrentlyPlaying());
+    }
+
+    public static boolean isFullyUpAndRunning() {
+        if (!fullyUpAndRunning) {
+            if (mainCompleted && ownerCompleted) fullyUpAndRunning = true;
+        }
+        return fullyUpAndRunning;
     }
 }

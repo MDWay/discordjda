@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static de.romjaki.discord.jda.Main.jda;
+
 
 /**
  * Created by RGR on 25.06.2017.
@@ -29,15 +31,18 @@ public class CommandQueue implements Command {
     @Override
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
         EmbedBuilder eB = new EmbedBuilder()
+                .setFooter(getCategory().getName(), jda.getSelfUser().getEffectiveAvatarUrl())
                 .setColor(UnUtil.RandomUtils.randomColor());
         TrackScheduler trackScheduler = CommandPlayMusic.getGuildAudioPlayer(guild).scheduler;
+        long curTime = 0l;
         try {
             eB.setDescription("Current Track: " + trackScheduler.currentTrack().getInfo().title + " " +
                     "by " + trackScheduler.currentTrack().getInfo().author);
+            curTime = trackScheduler.currentTrack().getDuration() - trackScheduler.currentTrack().getPosition();
         } catch (Exception ignored) {
         }
         List<AudioTrack> q = new ArrayList<>(trackScheduler.queue());
-        long[] time = {trackScheduler.currentTrack().getDuration() - trackScheduler.currentTrack().getPosition()};
+        long[] time = {curTime};
         IntStream.range(0, Math.min(q.size(), 15)).forEach(value -> {
             eB.addField(value + ". " + q.get(value).getInfo().title, "by " + q.get(value).getInfo().author + "; time till playing: " + CommandPlayMusic.durationFormat(time[0]), false);
             time[0] += q.get(value).getDuration();

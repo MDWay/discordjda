@@ -18,6 +18,7 @@ import javax.script.ScriptEngineFactory;
 import java.util.regex.Pattern;
 
 import static de.romjaki.discord.jda.Constants.progBars;
+import static de.romjaki.discord.jda.Main.jda;
 
 /**
  * Created by RGR on 15.06.2017.
@@ -83,6 +84,7 @@ public class CommandEval implements Command {
         }
         EmbedBuilder eB = new EmbedBuilder()
                 .setTitle("Eval'd")
+                .setFooter(getCategory().getName(), jda.getSelfUser().getEffectiveAvatarUrl())
                 .setColor(UnUtil.RandomUtils.randomColor())
                 .addField(":inbox_tray:Input", "```java\n" + input + "\n```", false);
         if (initError != null) {
