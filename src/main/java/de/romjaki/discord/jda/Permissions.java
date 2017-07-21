@@ -15,6 +15,7 @@ import java.util.function.UnaryOperator;
 public class Permissions {
     public static final Map<User, Integer> permissionMap = new HashMap<>();
     private static final Map<String, Integer> flagMap = new HashMap<>();
+    private static final Integer DEFAULT = 1;
     public static File permissionFile = new File(Constants.Config.path + "permissions.csv");
 
     private Permissions() {
@@ -27,7 +28,7 @@ public class Permissions {
 
     public static void setPermissions(User u, int permissions) {
         permissionMap.put(u, permissions);
-        if (permissions == 0) {
+        if (permissions == DEFAULT) {
             permissionMap.remove(u);
         }
         updatePermissions();
@@ -78,7 +79,7 @@ public class Permissions {
     }
 
     public static int getPermissions(User user) {
-        return permissionMap.getOrDefault(user, 1);
+        return permissionMap.getOrDefault(user, DEFAULT);
     }
 
     public static Integer getAsFlag(String arg) {

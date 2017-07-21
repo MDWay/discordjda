@@ -36,7 +36,7 @@ public class CommandPlayMusic implements Command {
     }
 
     public static synchronized GuildMusicManager getGuildAudioPlayer(Guild guild) {
-        GuildMusicManager musicManager = musicManagers.computeIfAbsent(guild.getId(), k -> new GuildMusicManager(playerManager));
+        GuildMusicManager musicManager = musicManagers.computeIfAbsent(guild.getId(), k -> new GuildMusicManager(playerManager, guild));
 
         guild.getAudioManager().setSendingHandler(musicManager.getSendHandler());
 
@@ -58,7 +58,7 @@ public class CommandPlayMusic implements Command {
                 if (display)
                     channel.sendMessage(new EmbedBuilder()
                             .setColor(UnUtil.RandomUtils.randomColor())
-                            .setTitle("Added Title to queue", track.getInfo().uri)
+                            .setTitle("Added Title to queue")
                             .setFooter("Music", jda.getSelfUser().getEffectiveAvatarUrl())
                             .addField("Name", track.getInfo().title, true)
                             .addField("Interpret", track.getInfo().author, true)

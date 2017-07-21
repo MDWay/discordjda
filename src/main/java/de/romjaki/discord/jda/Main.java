@@ -42,7 +42,6 @@ public class Main {
         Locale.setDefault(Locale.ENGLISH);
         registerCategories();
         registerCommands();
-        //For Lava Player
         try {
             jda = new JDABuilder(AccountType.BOT)
                     .setToken(Constants.DiscordUser.TOKEN)

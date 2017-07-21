@@ -1,7 +1,6 @@
 package de.romjaki.discord.jda.commands.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.player.event.AudioEvent;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
@@ -17,9 +16,11 @@ import java.util.Queue;
 public class TrackScheduler extends AudioEventAdapter {
     private Queue<AudioTrack> queue = new ArrayDeque<>();
     private AudioPlayer player;
+    private GuildMusicManager manager;
 
-    public TrackScheduler(AudioPlayer player) {
+    public TrackScheduler(AudioPlayer player, GuildMusicManager manager) {
         this.player = player;
+        this.manager = manager;
     }
 
     @Override
@@ -36,8 +37,12 @@ public class TrackScheduler extends AudioEventAdapter {
 
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-        SimpleLog.getLog("music").info("Starting next track....");
-        nextTrack(true);
+        if (endReason.mayStartNext) {
+            SimpleLog.getLog("music").info("Starting next track....");
+            nextTrack(true);
+        }
+
+
     }
 
     @Override
@@ -53,20 +58,19 @@ public class TrackScheduler extends AudioEventAdapter {
         }
     }
 
-    public void nextTrack(boolean interrupt) {/*
-        if (queue.isEmpty() || ((currentTrack() != null) && !interrupt)) {
+    public void nextTrack(boolean interrupt) {
+        if (interrupt) {
+            player.stopTrack();
+        }
+        if (queue.isEmpty()) {
+            manager.guild.getAudioManager().closeAudioConnection();
+        }
+        if (currentTrack() != null && !interrupt) {
             return;
         }
-        if (interrupt && currentTrack() != null) {
-            player.stopTrack();
-        }*/
         player.startTrack(queue.poll(), !interrupt);
     }
 
-    @Override
-    public void onEvent(AudioEvent audioEvent) {
-
-    }
 
     public Queue<AudioTrack> queue() {
         return queue;
