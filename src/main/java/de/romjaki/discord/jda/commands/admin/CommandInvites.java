@@ -4,10 +4,10 @@ import de.romjaki.discord.jda.Command;
 import de.romjaki.discord.jda.Commands;
 import de.romjaki.discord.jda.commands.Category;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.entities.impl.MessageImpl;
+
+import static de.romjaki.discord.jda.Main.jda;
 
 /**
  * Created by RGR on 26.06.2017.
@@ -25,7 +25,17 @@ public class CommandInvites implements Command {
 
     @Override
     public void execute(String[] args, Guild guild, TextChannel channel, Member member, Message message) {
-        guild.getJDA().getGuilds().forEach(g -> g.getTextChannels().forEach(c -> c.createInvite().queue(invite -> member.getUser().openPrivateChannel().complete().sendMessage(invite.toString()).queue())));
+        PrivateChannel pv = member.getUser().openPrivateChannel().complete();
+        pv.sendMessage("Sending invites...").queue();
+        for (Guild g : jda.getGuilds()) {
+            for (TextChannel tc : g.getTextChannels()) {
+                if (g.getSelfMember().hasPermission(tc, Permission.CREATE_INSTANT_INVITE)) {
+                    Invite i = tc.createInvite().setMaxUses(0).setMaxAge(0).setTemporary(false).complete();
+                    pv.sendMessage("discord.gg/" + i.getCode()).queue();
+                    break;
+                }
+            }
+        }
     }
 
     @Override
