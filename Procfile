@@ -1,1 +1,1 @@
-web: java -jar out/artifacts/discordjda_jar/discordjda.jar
+web: mvn exec:java

@@ -12,6 +12,7 @@ import de.romjaki.discord.jda.commands.category.CategoryWebContent;
 import de.romjaki.discord.jda.commands.music.*;
 import de.romjaki.discord.jda.commands.web.CommandAvasDemon;
 import de.romjaki.discord.jda.commands.web.CommandPostillon;
+import de.romjaki.discord.jda.webinterface.WMain;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -60,6 +61,7 @@ public class Main {
         Permissions.readPermissions(jda);
         Commands.registerHandles(jda);
         Constants.loadOwner(jda, u -> ownerCompleted = true);
+        WMain.createWebsocket();
         mainCompleted = true;
     }
 
