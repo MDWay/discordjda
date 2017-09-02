@@ -47,5 +47,6 @@
     <orderEntry type="library" name="Maven: com.googlecode.guava-osgi:guava-osgi:8.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.http-client:google-http-client-jackson:1.20.0" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.11" level="project" />
+    <orderEntry type="library" name="Maven: org.hsqldb:hsqldb:2.4.0" level="project" />
   </component>
 </module>

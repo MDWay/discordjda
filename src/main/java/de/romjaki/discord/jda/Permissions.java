@@ -57,6 +57,8 @@ public class Permissions {
     }
 
     public static void readPermissions(JDA jda) {
+
+
         if (!permissionFile.getParentFile().exists()) {
             permissionFile.getParentFile().mkdirs();
         }

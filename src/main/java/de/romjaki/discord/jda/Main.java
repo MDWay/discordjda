@@ -40,6 +40,9 @@ public class Main {
     }
 
     public static void main(String... args) {
+
+        Database.loadDatabase();
+
         Locale.setDefault(Locale.ENGLISH);
         registerCategories();
         registerCommands();
@@ -81,6 +84,7 @@ public class Main {
     private static void registerCommands() {
         Commands.addCommand(new CommandAvasDemon());
         Commands.addCommand(new CommandCat());
+        Commands.addCommand(new CommandSuggest());
         Commands.addCommand(new CommandInvites());
         Commands.addCommand(new CommandHelp());
         Commands.addCommand(new CommandCountdown());
