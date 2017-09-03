@@ -98,7 +98,7 @@ public class Constants {
     }
 
     public static class Config {
-        public static String path = "C:\\config\\";
+        public static String path = System.getProperty("user.home") + "/config/";
 
         private Config() {
             UnUtil.singleton(Config.class);

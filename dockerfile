@@ -31,5 +31,11 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 5349
 
+WORKDIR /usr/container
+
+ADD src src
+
+ADD pom.xml pom.xml
+
 CMD mvn exec:java
 
