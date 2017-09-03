@@ -36,6 +36,6 @@ WORKDIR /usr/container
 ADD src/ src/
 ADD pom.xml pom.xml
 
-RUN mvn package
+RUN mvn clean compile assembly:single
 
 CMD java -jar target/discordjda.jar
