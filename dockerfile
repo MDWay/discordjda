@@ -38,7 +38,4 @@ ADD pom.xml pom.xml
 
 RUN mvn package
 
-ADD /usr/container/target/discordjda.jar discordjda.jar
-
-CMD java -jar discordjda.jar
-
+CMD java -jar target/discordjda.jar
