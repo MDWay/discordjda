@@ -31,5 +31,5 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 5349
 
-CMD maven exec:java
+CMD mvn exec:java
 
