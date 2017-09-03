@@ -7,10 +7,13 @@
     <groupId>discordjda</groupId>
     <artifactId>discordjda</artifactId>
     <version>1.0-infdev-2</version>
+    <name>discordjda</name>
+
 
     <packaging>jar</packaging>
 
     <build>
+        <finalName>discordjda</finalName>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
