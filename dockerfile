@@ -33,7 +33,7 @@ EXPOSE 5349
 
 WORKDIR /usr/container
 
-ADD src src
+ADD src/ src/
 
 ADD pom.xml pom.xml
 
