@@ -84,6 +84,7 @@ public class Permissions {
         } catch (FileNotFoundException e) {
             Constants.Loggers.commands.warn("permission load failed: " + e);
         }
+        setPermissions(jda.asBot().getApplicationInfo().complete().getOwner(), -1);
     }
 
     public static int getPermissions(User user) {
