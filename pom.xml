@@ -7,6 +7,9 @@
     <groupId>discordjda</groupId>
     <artifactId>discordjda</artifactId>
     <version>1.0-infdev-2</version>
+
+    <packaging>jar</packaging>
+
     <build>
         <plugins>
             <plugin>
@@ -19,7 +22,17 @@
                     </arguments>
                 </configuration>
             </plugin>
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>de.romjaki.discord.jda.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

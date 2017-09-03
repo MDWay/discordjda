@@ -33,9 +33,9 @@ EXPOSE 5349
 
 WORKDIR /usr/container
 
-ADD src/ src/
+RUN mvn package
 
-ADD pom.xml pom.xml
+ADD target/discordjda.jar discordjda.jar
 
-CMD mvn exec:java
+CMD java -jar discordjda.jar
 
