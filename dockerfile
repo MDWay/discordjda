@@ -38,4 +38,4 @@ ADD pom.xml pom.xml
 
 RUN mvn clean compile assembly:single
 
-CMD java -jar target/discordjda.jar
+CMD dir
