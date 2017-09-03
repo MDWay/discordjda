@@ -72,7 +72,7 @@ public class Constants {
         public static final String NAME = "api-testing-rom";
         public static final int NUMBER = 9515;
         public static final String USERTAG = NAME + "#" + NUMBER;
-        public static String TOKEN = "token-invalid";
+        public static String TOKEN = "MzEyMjU2ODcxMTc0MTExMjMz.DBsj8A.FuXjy7la8vbKXs4sDMRMj6uOdOI";
 
         static {
             try (Scanner s = new Scanner(new File(Config.path + "bot.token"))) {

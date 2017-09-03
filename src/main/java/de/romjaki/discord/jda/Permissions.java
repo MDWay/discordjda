@@ -18,6 +18,12 @@ public class Permissions {
     private static final Integer DEFAULT = 1;
     public static File permissionFile = new File(Constants.Config.path + "permissions.csv");
 
+    static {
+        if (!permissionFile.exists()) {
+            permissionFile.mkdirs();
+        }
+    }
+
     private Permissions() {
         UnUtil.singleton(Permissions.class);
     }

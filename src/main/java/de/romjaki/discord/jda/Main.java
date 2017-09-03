@@ -21,6 +21,10 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
 import javax.security.auth.login.LoginException;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -39,7 +43,8 @@ public class Main {
         UnUtil.singleton(Main.class);
     }
 
-    public static void main(String... args) {
+    public static void main(String... args) throws IOException {
+
 
         Database.loadDatabase();
 
