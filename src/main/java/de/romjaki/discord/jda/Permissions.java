@@ -19,8 +19,8 @@ public class Permissions {
     public static File permissionFile = new File(Constants.Config.path + "permissions.csv");
 
     static {
-        if (!permissionFile.exists()) {
-            permissionFile.mkdirs();
+        if (permissionFile.isDirectory()) {
+            permissionFile.delete();
         }
     }
 
