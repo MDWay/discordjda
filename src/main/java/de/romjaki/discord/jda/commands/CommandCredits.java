@@ -17,7 +17,7 @@ public class CommandCredits implements Command {
     private static Map<String, String> credits = new HashMap<>();
 
     static {
-        credits.put("Author", "<@!310702108997320705> aka Roman Gräf");
+        credits.put("Author", "<@!310702108997320705> aka Roman Gr\u00e4f");
         credits.put("Icon", "<@!141137788954345472> aka Malte");
         credits.put("Help", "<@!198137282018934784> aka Sanduhr");
     }

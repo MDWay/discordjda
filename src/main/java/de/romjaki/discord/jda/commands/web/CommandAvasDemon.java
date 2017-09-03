@@ -86,11 +86,11 @@ public class CommandAvasDemon extends ListenerAdapter implements Command {
             return;
         }
         int id = Integer.parseInt(matcher.group("id"));
-        if (event.getReaction().getEmote().toString().equals("RE:⬅(null)")) {
+        if (event.getReaction().getEmote().toString().equals("RE:\u2b05(null)")) {
             id--;
-        } else if (event.getReaction().getEmote().toString().equals("RE:➡(null)")) {
+        } else if (event.getReaction().getEmote().toString().equals("RE:\u27a1(null)")) {
             id++;
-        } else if (event.getReaction().getEmote().toString().equals("RE:❌(null)")) {
+        } else if (event.getReaction().getEmote().toString().equals("RE:\u274c(null)")) {
             m.delete().queue();
             return;
         } else {
@@ -107,9 +107,9 @@ public class CommandAvasDemon extends ListenerAdapter implements Command {
                 .setFooter(String.format(AVAS_DEMON_FOOTER, id), AVAS_DEMON_START_URL)
                 .setImage(String.format(AVAS_DEMON_URL, id))
                 .build()).queue(msg -> {
-            msg.addReaction("⬅").queue();
-            msg.addReaction("➡").queue();
-            msg.addReaction("❌").queue();
+            msg.addReaction("\u2b05").queue();
+            msg.addReaction("\u27a1").queue();
+            msg.addReaction("\u274c").queue();
         });
     }
 
