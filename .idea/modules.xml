@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/discordjda.iml" filepath="$PROJECT_DIR$/discordjda.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/discordjda.iml" filepath="$PROJECT_DIR$/.idea/modules/discordjda.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/discordjda_main.iml" filepath="$PROJECT_DIR$/.idea/modules/discordjda_main.iml" group="discordjda" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/discordjda_test.iml" filepath="$PROJECT_DIR$/.idea/modules/discordjda_test.iml" group="discordjda" />
     </modules>
   </component>
 </project>

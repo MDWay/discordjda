@@ -1,0 +1,26 @@
+apply plugin: 'java'
+
+group = 'discordjda'
+version = '1.0-infdev-2'
+
+description = """discordjda"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+
+repositories {
+    jcenter()
+}
+dependencies {
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version:'4.5.3'
+    compile group: 'com.sedmelluq', name: 'lavaplayer', version:'1.2.42'
+    compile group: 'com.google.oauth-client', name: 'google-oauth-client-jetty', version:'1.11.0-beta'
+    compile group: 'com.google.oauth-client', name: 'google-oauth-client', version:'1.22.0'
+    compile group: 'net.dv8tion', name: 'JDA', version:'3.1.1_212'
+    compile group: 'org.apache.commons', name: 'commons-math3', version:'3.4'
+    compile group: 'com.googlecode.guava-osgi', name: 'guava-osgi', version:'8.0.0'
+    compile group: 'com.google.http-client', name: 'google-http-client-jackson', version:'1.20.0'
+    compile group: 'org.hsqldb', name: 'hsqldb', version:'2.4.0'
+}
